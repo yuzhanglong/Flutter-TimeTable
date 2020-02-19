@@ -57,3 +57,43 @@ class _TopBarItemState extends State<TopBarItem> {
     );
   }
 }
+
+
+
+class RightIconButtons extends StatefulWidget {
+  @override
+  _RightIconButtonsState createState() => _RightIconButtonsState();
+}
+
+class _RightIconButtonsState extends State<RightIconButtons> {
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      children: <Widget>[
+        Container(
+          child: IconButton(
+            highlightColor: Colors.white,
+            splashColor: Colors.white,
+            focusColor: Colors.transparent,
+            color: Colors.white,
+            icon:Icon(Icons.add, color: GlobalConfig.fontColor),
+            onPressed: (){},
+          ),
+        ),
+        Container(
+          padding: EdgeInsets.fromLTRB(0, 0, 5, 0),
+          child: IconButton(
+            highlightColor: Colors.white,
+            splashColor: Colors.white,
+            focusColor: Colors.transparent,
+            color: Colors.white,
+            icon: Icon(Icons.file_download, color: GlobalConfig.fontColor,),
+            onPressed: (){
+
+            },
+          ),
+        ),
+      ],
+    );
+  }
+}

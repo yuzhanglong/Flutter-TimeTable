@@ -32,14 +32,7 @@ class _HomeState extends State<Home> {
     backgroundColor: GlobalConfig.basicColor,
     elevation:0.0,
     actions: <Widget>[
-      Container(
-        padding: EdgeInsets.fromLTRB(10, 0, 10, 0),
-        child: Icon(Icons.add, color: GlobalConfig.fontColor),
-      ),
-      Container(
-        padding: EdgeInsets.fromLTRB(10, 0, 10, 0),
-        child: Icon(Icons.file_download, color: GlobalConfig.fontColor,),
-      ),
+      RightIconButtons()
     ],
   );
 
