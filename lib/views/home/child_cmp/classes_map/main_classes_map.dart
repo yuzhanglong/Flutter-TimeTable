@@ -6,6 +6,14 @@ import 'package:zucc_helper/views/home/child_cmp/classes_map/class_time_item.dar
 
 
 class HomeClassView extends StatefulWidget {
+  final List stuClasses;
+
+  HomeClassView({
+    this.stuClasses
+  });
+
+
+
   @override
   _HomeClassViewState createState() => _HomeClassViewState();
 }
@@ -13,13 +21,11 @@ class HomeClassView extends StatefulWidget {
 class _HomeClassViewState extends State<HomeClassView> {
   @override
   Widget build(BuildContext context) {
-    List tempItem = List<Widget>.filled(96, Container(child: Text("aa4aaaa"),));
 
 
     List<Widget> makeList(){
       Map schoolData = SchoolData.zucc;
       List<Widget> allItems = List();
-
 
       for(int i = 0; i < schoolData['timeTable']['classNumOneDay']; i++){
         allItems.add(ClassTime(
@@ -28,7 +34,34 @@ class _HomeClassViewState extends State<HomeClassView> {
           endTime: schoolData['timeTable']['time'][i][1],
         ));
         for(int j = 0; j <= 6; j++){
-          allItems.add(ClassCard());
+          allItems.add(ClassCard()
+          );
+        }
+      }
+
+      for(int k = 0; k < widget.stuClasses.length; k++){
+        var singleClass = widget.stuClasses[k];
+        int classWeekDay;
+        int classTime;
+        int classTime2;
+        if(singleClass["classTime"]['begin'] == singleClass["classTime"]['end']){
+          classWeekDay = singleClass["weekDay"];
+          classTime = singleClass["classTime"]['begin'];
+          var pos = 8 * classTime + classWeekDay;
+          allItems[pos] = ClassCard(
+            className: singleClass['name'] ,
+          );
+        }
+        else{
+          classWeekDay = singleClass["weekDay"];
+          classTime = singleClass["classTime"]['begin'];
+          classTime2 = singleClass["classTime"]['end'];
+          allItems[8 * classTime + classWeekDay] = ClassCard(
+            className: singleClass['name'] ,
+          );
+          allItems[8 * classTime2 + classWeekDay] =ClassCard(
+            className: singleClass['name'] ,
+          );
         }
       }
       return allItems;
@@ -42,8 +75,11 @@ class _HomeClassViewState extends State<HomeClassView> {
       child: ScrollConfiguration(
         behavior: RefuseBlueActivation(),
         child: GridView(
+
           gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-            childAspectRatio: 0.7,
+            crossAxisSpacing: 2,
+            mainAxisSpacing:2,
+            childAspectRatio: 0.6,
             crossAxisCount: 8,
           ),
           children: makeList(),

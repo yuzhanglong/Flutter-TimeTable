@@ -88,9 +88,7 @@ class _RightIconButtonsState extends State<RightIconButtons> {
             focusColor: Colors.transparent,
             color: Colors.white,
             icon: Icon(Icons.file_download, color: GlobalConfig.fontColor,),
-            onPressed: (){
-
-            },
+            onPressed: (){},
           ),
         ),
       ],
