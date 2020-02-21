@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:zucc_helper/components/drawer/main_drawer.dart';
 import 'package:zucc_helper/components/topbar/top_bar_item.dart';
@@ -16,6 +18,14 @@ class Home extends StatefulWidget {
 class _HomeState extends State<Home> {
   List stuClasses = [];
 
+  //初始化当前日期
+
+  static DateTime nowDate = DateTime.now();
+
+  DateTime beginDate = nowDate.subtract(Duration(days: nowDate.weekday - 1)) ;
+
+
+
 
   @override
   void initState() {
@@ -27,17 +37,49 @@ class _HomeState extends State<Home> {
     });
   }
 
+  renewHomeData(condition){
+    if(condition == 1){
+      setState(() {
+        beginDate = beginDate.add(Duration(days: 7));
+      });
+    }
+    else{
+      setState(() {
+        beginDate = beginDate.subtract(Duration(days: 7));
+      });
+    }
+  }
+
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: _appbar,
       drawer: MainDrawer(),
-      body: Column(
-        children: <Widget>[
-          DayBarView(),
-          HomeClassView(stuClasses: stuClasses,)
-        ],
+      body: GestureDetector(
+        onHorizontalDragEnd:(startDetails){
+          //从源代码得知，startDetails.primaryVelocity 为移动的距离差 向左滑为负数 向右滑为正数
+          //绝对值越大 滑动幅度越大
+          var p = startDetails.primaryVelocity;
+          if(p.abs() > 1500){
+            if(p > 0){
+              renewHomeData(0);
+              print("++++");
+            }
+            else{
+              renewHomeData(1);
+              print("----");
+            }
+          }
+
+
+        },
+        child: Column(
+          children: <Widget>[
+            DayBarView(beginDay: beginDate,),
+            HomeClassView(stuClasses: stuClasses,)
+          ],
+        ),
       ),
     );
   }

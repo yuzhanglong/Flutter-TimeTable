@@ -23,6 +23,8 @@ class _HomeClassViewState extends State<HomeClassView> {
   Widget build(BuildContext context) {
 
 
+
+
     List<Widget> makeList(){
       Map schoolData = SchoolData.zucc;
       List<Widget> allItems = List();
@@ -44,24 +46,27 @@ class _HomeClassViewState extends State<HomeClassView> {
         int classWeekDay;
         int classTime;
         int classTime2;
+        //只有一节课的情况
         if(singleClass["classTime"]['begin'] == singleClass["classTime"]['end']){
           classWeekDay = singleClass["weekDay"];
           classTime = singleClass["classTime"]['begin'];
           var pos = 8 * classTime + classWeekDay;
           allItems[pos] = ClassCard(
-            className: singleClass['name'] ,
+            baseColor: Colors.lightBlueAccent,
+            className: singleClass['name'],
           );
         }
+        //多节课程连续
         else{
           classWeekDay = singleClass["weekDay"];
           classTime = singleClass["classTime"]['begin'];
           classTime2 = singleClass["classTime"]['end'];
-          allItems[8 * classTime + classWeekDay] = ClassCard(
-            className: singleClass['name'] ,
-          );
-          allItems[8 * classTime2 + classWeekDay] =ClassCard(
-            className: singleClass['name'] ,
-          );
+          for(int t = classTime; t <= classTime2; t++){
+            allItems[8 * t + classWeekDay] = ClassCard(
+              baseColor: Colors.lightBlueAccent,
+              className: singleClass['name']
+            );
+          }
         }
       }
       return allItems;
@@ -75,10 +80,9 @@ class _HomeClassViewState extends State<HomeClassView> {
       child: ScrollConfiguration(
         behavior: RefuseBlueActivation(),
         child: GridView(
-
           gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
             crossAxisSpacing: 2,
-            mainAxisSpacing:2,
+            mainAxisSpacing: 2,
             childAspectRatio: 0.6,
             crossAxisCount: 8,
           ),
