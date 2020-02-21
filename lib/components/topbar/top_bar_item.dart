@@ -4,14 +4,36 @@ import 'package:zucc_helper/config/global_config.dart';
 
 
 class TopBarItem extends StatefulWidget {
+  //当前周次 默认为 1
+  final int currentWeek;
+
+  TopBarItem({
+    this.currentWeek = 1,
+  });
+
+
   @override
   _TopBarItemState createState() => _TopBarItemState();
 }
 
-class _TopBarItemState extends State<TopBarItem> {
+class _TopBarItemState extends State<TopBarItem> with SingleTickerProviderStateMixin {
+  Animation<double> weekTitleAnimation;
+  AnimationController weekTitleController;
 
 
-  final int _condition = 1;    //condition表示情形 1表示当前周 0表示不是当前周
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    weekTitleController = AnimationController(duration: const Duration(milliseconds: 300), vsync: this);
+    weekTitleAnimation = Tween(begin: 8.0, end: 20.0).animate(weekTitleController)
+      ..addListener(() {
+        setState(() {});
+      });
+    weekTitleController.forward();
+  }
+
+
 
 
   @override
@@ -34,14 +56,19 @@ class _TopBarItemState extends State<TopBarItem> {
                   color: Colors.white,
                   child: Row(
                     children: <Widget>[
-                      Text(
-                        "第1周",
-                        style: TextStyle(color: GlobalConfig.fontColor, fontSize: 20, ),
+                      Container(
+                        child: Text(
+                          "第${widget.currentWeek}周",
+                          style: TextStyle(color: GlobalConfig.fontColor, fontSize: weekTitleAnimation.value, ),
+                        ),
                       ),
                       Icon(Icons.arrow_drop_down, color: GlobalConfig.fontColor,)
                     ],
                   ),
-                  onPressed: (){},
+                  onPressed: (){
+                    weekTitleController.reset();
+                    weekTitleController.forward();
+                  },
                 ),
               ),
             ],
@@ -88,7 +115,9 @@ class _RightIconButtonsState extends State<RightIconButtons> {
             focusColor: Colors.transparent,
             color: Colors.white,
             icon: Icon(Icons.file_download, color: GlobalConfig.fontColor,),
-            onPressed: (){},
+            onPressed: (){
+
+            },
           ),
         ),
       ],

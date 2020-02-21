@@ -36,8 +36,7 @@ class _HomeClassViewState extends State<HomeClassView> {
           endTime: schoolData['timeTable']['time'][i][1],
         ));
         for(int j = 0; j <= 6; j++){
-          allItems.add(ClassCard()
-          );
+          allItems.add(ClassCard());
         }
       }
 

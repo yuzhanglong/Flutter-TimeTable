@@ -1,5 +1,4 @@
 import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:zucc_helper/components/drawer/main_drawer.dart';
 import 'package:zucc_helper/components/topbar/top_bar_item.dart';
@@ -15,14 +14,12 @@ class Home extends StatefulWidget {
   _HomeState createState() => _HomeState();
 }
 
-class _HomeState extends State<Home> {
+class _HomeState extends State<Home>  with SingleTickerProviderStateMixin  {
   List stuClasses = [];
 
   //初始化当前日期
-
   static DateTime nowDate = DateTime.now();
-
-  DateTime beginDate = nowDate.subtract(Duration(days: nowDate.weekday - 1)) ;
+  DateTime beginDate = nowDate.subtract(Duration(days: nowDate.weekday - 1));
 
 
 
@@ -61,7 +58,8 @@ class _HomeState extends State<Home> {
           //从源代码得知，startDetails.primaryVelocity 为移动的距离差 向左滑为负数 向右滑为正数
           //绝对值越大 滑动幅度越大
           var p = startDetails.primaryVelocity;
-          if(p.abs() > 1500){
+
+          if(p.abs() > 1000){
             if(p > 0){
               renewHomeData(0);
               print("++++");
@@ -71,9 +69,8 @@ class _HomeState extends State<Home> {
               print("----");
             }
           }
-
-
         },
+
         child: Column(
           children: <Widget>[
             DayBarView(beginDay: beginDate,),
@@ -92,6 +89,4 @@ class _HomeState extends State<Home> {
       RightIconButtons()
     ],
   );
-
-
 }
