@@ -47,7 +47,7 @@ class _TopBarItemState extends State<TopBarItem> with SingleTickerProviderStateM
             children: <Widget>[
               Container(
                 height: 30,
-                width: 83,
+                width: 90,
                 child: FlatButton(
                   padding: EdgeInsets.all(0.0),//按钮距离里面内容的内边距
                   highlightColor: Colors.white,
@@ -58,7 +58,7 @@ class _TopBarItemState extends State<TopBarItem> with SingleTickerProviderStateM
                     children: <Widget>[
                       Container(
                         child: Text(
-                          "第${widget.currentWeek}周",
+                          "第${widget.currentWeek.toString()}周",
                           style: TextStyle(color: GlobalConfig.fontColor, fontSize: weekTitleAnimation.value, ),
                         ),
                       ),

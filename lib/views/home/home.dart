@@ -1,4 +1,3 @@
-import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:zucc_helper/components/drawer/main_drawer.dart';
 import 'package:zucc_helper/components/topbar/top_bar_item.dart';
@@ -14,7 +13,8 @@ class Home extends StatefulWidget {
   _HomeState createState() => _HomeState();
 }
 
-class _HomeState extends State<Home>  with SingleTickerProviderStateMixin  {
+class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
+  int weekNumber = 1;
   List stuClasses = [];
 
   //初始化当前日期
@@ -35,14 +35,16 @@ class _HomeState extends State<Home>  with SingleTickerProviderStateMixin  {
   }
 
   renewHomeData(condition){
-    if(condition == 1){
+    if(condition == 1 && weekNumber < 30){
       setState(() {
         beginDate = beginDate.add(Duration(days: 7));
+        weekNumber++;
       });
     }
-    else{
+    else if(condition == 0 && weekNumber <= 30 && weekNumber > 1){
       setState(() {
         beginDate = beginDate.subtract(Duration(days: 7));
+        weekNumber--;
       });
     }
   }
@@ -62,11 +64,9 @@ class _HomeState extends State<Home>  with SingleTickerProviderStateMixin  {
           if(p.abs() > 1000){
             if(p > 0){
               renewHomeData(0);
-              print("++++");
             }
             else{
               renewHomeData(1);
-              print("----");
             }
           }
         },
@@ -82,7 +82,9 @@ class _HomeState extends State<Home>  with SingleTickerProviderStateMixin  {
   }
 
   get _appbar => AppBar(
-    title: TopBarItem(),
+    title: TopBarItem(
+      currentWeek: weekNumber,
+    ),
     backgroundColor: GlobalConfig.basicColor,
     elevation:0.0,
     actions: <Widget>[
