@@ -7,7 +7,7 @@ class HttpRequest {
   //静态方法 每次就不需要创建一个实例
   static BaseOptions baseOptions = BaseOptions(baseUrl: BASE_URL, connectTimeout: TIME_OUT);
 
-  static Future request(String url, {String method = "get", Map<String, dynamic> params}) async {
+  static Future request(String url, {String method = "get", Map<String, dynamic> params, data}) async {
     //1.必须创建一个dio实例
     final dio = Dio(baseOptions);
 
@@ -15,10 +15,10 @@ class HttpRequest {
     Options options = Options(method: method);
 
     try {
-      final res = await dio.request(url, queryParameters: params, options: options);
+      final res = await dio.request(url, queryParameters: params, options: options, data: data);
       return res.data;
     } on DioError catch (error) {
-      throw error;
+      throw error.response.data;
     }
 
   }
