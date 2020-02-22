@@ -35,13 +35,24 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
   }
 
   renewHomeData(condition){
-    if(condition == 1 && weekNumber < 30){
+    if(condition == 1 && weekNumber < 20){
       setState(() {
         beginDate = beginDate.add(Duration(days: 7));
         weekNumber++;
+        stuClasses.add({
+          "classTime": {
+            "begin": 0,
+            "end": 1
+          },
+          "name": "微积分Ⅱ(甲)",
+          "place": "教三301",
+          "teacher": "童雯雯",
+          "weekDay": 6,
+          "weekDuring": "1-16"
+        });
       });
     }
-    else if(condition == 0 && weekNumber <= 30 && weekNumber > 1){
+    else if(condition == 0 && weekNumber <= 20 && weekNumber > 1){
       setState(() {
         beginDate = beginDate.subtract(Duration(days: 7));
         weekNumber--;

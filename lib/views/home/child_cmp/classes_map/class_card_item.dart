@@ -25,13 +25,33 @@ class ClassCard extends StatefulWidget {
   _ClassCardState createState() => _ClassCardState();
 }
 
-class _ClassCardState extends State<ClassCard> {
+class _ClassCardState extends State<ClassCard> with TickerProviderStateMixin{
+  Animation<double> cardAnimation;
+  AnimationController cardController;
+
+
+  @override
+  void didUpdateWidget(ClassCard oldWidget) {
+    // TODO: implement didUpdateWidget
+    super.didUpdateWidget(oldWidget);
+    print(oldWidget);
+    cardController.reset();
+    cardController.forward();
+  }
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
+    cardController = AnimationController(duration: const Duration(milliseconds: 800), vsync: this);
+    cardAnimation = Tween(begin: 0.1, end: 1.0).animate(CurvedAnimation(
+      parent: cardController,
+      curve: Curves.bounceInOut,
+    ));
+    cardController.forward();
   }
+
+
 
 
   getBorderRadius(type){
@@ -76,28 +96,31 @@ class _ClassCardState extends State<ClassCard> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(
-        color: widget.baseColor,
-        //圆角幅度
-        borderRadius: getBorderRadius(widget.cardType),
-        border: Border.all(width:3, color: Colors.transparent),
-      ),
-      child: Column(
-        children: <Widget>[
-          Text(
-            widget.className,
-            overflow: TextOverflow.ellipsis,
-            softWrap: true,
-            maxLines: 4,
-            textAlign: TextAlign.center,
-            style: TextStyle(
-                fontSize: 12,
-                fontWeight: FontWeight.bold,
-                color: Colors.white,
+    return ScaleTransition(
+      scale: cardAnimation,
+      child: Container(
+        decoration: BoxDecoration(
+          color: widget.baseColor,
+          //圆角幅度
+          borderRadius: getBorderRadius(widget.cardType),
+          border: Border.all(width:3, color: Colors.transparent),
+        ),
+        child: Column(
+          children: <Widget>[
+            Text(
+              widget.className,
+              overflow: TextOverflow.ellipsis,
+              softWrap: true,
+              maxLines: 4,
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                  fontSize: 12,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.white,
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

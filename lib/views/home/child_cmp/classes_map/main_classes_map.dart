@@ -22,9 +22,6 @@ class _HomeClassViewState extends State<HomeClassView> {
   @override
   Widget build(BuildContext context) {
 
-
-
-
     List<Widget> makeList(){
       Map schoolData = SchoolData.zucc;
       List<Widget> allItems = List();
