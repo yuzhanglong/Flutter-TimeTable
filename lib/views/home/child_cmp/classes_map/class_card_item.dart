@@ -34,7 +34,6 @@ class _ClassCardState extends State<ClassCard> with TickerProviderStateMixin{
   void didUpdateWidget(ClassCard oldWidget) {
     // TODO: implement didUpdateWidget
     super.didUpdateWidget(oldWidget);
-    print(oldWidget);
     cardController.reset();
     cardController.forward();
   }

@@ -2,11 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:zucc_helper/components/drawer/main_drawer.dart';
 import 'package:zucc_helper/components/topbar/top_bar_item.dart';
 import 'package:zucc_helper/config/global_config.dart';
+import 'package:zucc_helper/store/home_provider.dart';
 import 'package:zucc_helper/utils/data_helper.dart';
 import 'package:zucc_helper/utils/snack_bar.dart';
 import 'package:zucc_helper/views/home/child_cmp/classes_map/main_classes_map.dart';
 import 'package:zucc_helper/views/home/child_cmp/day_bar/day_bar.dart';
-
+import 'package:provider/provider.dart';
 //首页
 
 class Home extends StatefulWidget {
@@ -15,15 +16,6 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
-  int weekNumber = 1;
-  //学生课表list 根据情况可以自动更新
-  List stuClasses = [];
-
-
-  //初始化当前日期
-  static DateTime nowDate = DateTime.now();
-  DateTime beginDate = nowDate.subtract(Duration(days: nowDate.weekday - 1));
-
 
   GlobalKey <ScaffoldState> _scaffoldkey = GlobalKey<ScaffoldState>();
 
@@ -41,27 +33,35 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
 
 
 
-  renewHomeData(condition){
-    if(condition == 1 && weekNumber < 20){
-      setState(() {
-        beginDate = beginDate.add(Duration(days: 7));
-        weekNumber++;
-      });
+  renewHomeData(condition, HomePrivider provider){
+    if(condition == 1){
+      provider.addOneWeek();
     }
-    else if(condition == 0 && weekNumber <= 20 && weekNumber > 1){
-      setState(() {
-        beginDate = beginDate.subtract(Duration(days: 7));
-        weekNumber--;
-      });
+    else if(condition == 0){
+      provider.minusOneWeek();
     }
   }
 
 
+
   @override
   Widget build(BuildContext context) {
+
+    HomePrivider provider = Provider.of<HomePrivider>(context);
+
+
     return Scaffold(
       key: _scaffoldkey,
-      appBar: _appbar,
+      appBar: AppBar(
+        title: TopBarItem(
+          currentWeek: provider.weekNumber ,
+        ),
+        backgroundColor: GlobalConfig.basicColor,
+        elevation:0.0,
+        actions: <Widget>[
+          RightIconButtons()
+        ],
+      ),
       drawer: MainDrawer(),
       body: GestureDetector(
         onHorizontalDragEnd:(startDetails){
@@ -71,32 +71,21 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
 
           if(p.abs() > 1000){
             if(p > 0){
-              renewHomeData(0);
+              renewHomeData(0, provider);
             }
             else{
-              renewHomeData(1);
+              renewHomeData(1, provider);
             }
           }
+          provider.appendstuClasses();
         },
-
         child: Column(
           children: <Widget>[
-            DayBarView(beginDay: beginDate,),
-            HomeClassView(stuClasses: stuClasses,)
+            DayBarView(beginDay: provider.beginDate,),
+            HomeClassView(stuClasses: provider.stuClasses)
           ],
         ),
       ),
     );
   }
-
-  get _appbar => AppBar(
-    title: TopBarItem(
-      currentWeek: weekNumber,
-    ),
-    backgroundColor: GlobalConfig.basicColor,
-    elevation:0.0,
-    actions: <Widget>[
-      RightIconButtons()
-    ],
-  );
 }
