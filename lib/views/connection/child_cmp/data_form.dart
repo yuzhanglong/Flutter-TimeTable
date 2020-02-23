@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:zucc_helper/config/network_config.dart';
 import 'package:zucc_helper/network/requests.dart';
+import 'package:zucc_helper/utils/snack_bar.dart';
 import 'package:zucc_helper/views/connection/child_cmp/check_code.dart';
 
 
@@ -28,18 +29,17 @@ class _DataFormState extends State<DataForm> {
       "password":password,
       "checkCode":code,
     }).then((res){
-      print(res);
-      print("object1");
+
     }).catchError((error){
-      print("object2");
-      print(error);
-      Scaffold.of(context).showSnackBar(SnackBar(
-        content: Text(error["information"]),
-        backgroundColor: Colors.red,
-        duration: Duration(seconds: 1),
-      ));
+      Scaffold.of(context).showSnackBar(Snack.error(error['information']));
     });
   }
+
+  saveDataForm(){
+
+  }
+
+
 
 
   @override

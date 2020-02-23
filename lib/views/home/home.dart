@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:zucc_helper/components/drawer/main_drawer.dart';
 import 'package:zucc_helper/components/topbar/top_bar_item.dart';
 import 'package:zucc_helper/config/global_config.dart';
-import 'package:zucc_helper/network/requests.dart';
+import 'package:zucc_helper/utils/data_helper.dart';
+import 'package:zucc_helper/utils/snack_bar.dart';
 import 'package:zucc_helper/views/home/child_cmp/classes_map/main_classes_map.dart';
 import 'package:zucc_helper/views/home/child_cmp/day_bar/day_bar.dart';
 
@@ -15,41 +16,36 @@ class Home extends StatefulWidget {
 
 class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
   int weekNumber = 1;
+  //学生课表list 根据情况可以自动更新
   List stuClasses = [];
+
 
   //初始化当前日期
   static DateTime nowDate = DateTime.now();
   DateTime beginDate = nowDate.subtract(Duration(days: nowDate.weekday - 1));
 
 
+  GlobalKey <ScaffoldState> _scaffoldkey = GlobalKey<ScaffoldState>();
 
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-
-    HttpRequest.request("/utils/get_classes").then((res){
-      this.stuClasses = res['classes'];
+    SharedPreferenceUtil.getString("user").then((value){
+      if(value == null){
+        _scaffoldkey.currentState.showSnackBar(Snack.info("请登录以获取课表"));
+      }
     });
   }
+
+
 
   renewHomeData(condition){
     if(condition == 1 && weekNumber < 20){
       setState(() {
         beginDate = beginDate.add(Duration(days: 7));
         weekNumber++;
-        stuClasses.add({
-          "classTime": {
-            "begin": 0,
-            "end": 1
-          },
-          "name": "微积分Ⅱ(甲)",
-          "place": "教三301",
-          "teacher": "童雯雯",
-          "weekDay": 6,
-          "weekDuring": "1-16"
-        });
       });
     }
     else if(condition == 0 && weekNumber <= 20 && weekNumber > 1){
@@ -64,6 +60,7 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      key: _scaffoldkey,
       appBar: _appbar,
       drawer: MainDrawer(),
       body: GestureDetector(

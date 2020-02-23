@@ -35,18 +35,18 @@ class _ConnectionPageState extends State<ConnectionPage> with TickerProviderStat
   Widget build(BuildContext context) {
     return Container(
       decoration:  BoxDecoration(
-        color: Colors.white,
+        color: Colors.lightBlueAccent,
         //设置四周圆角 角度
         borderRadius: BorderRadius.all(Radius.circular(appearAnimation2.value)),
         //设置四周边框
-        border: Border.all(width: appearAnimation1.value, color: Colors.white),
+        border: Border.all(width: appearAnimation1.value, color: Colors.lightBlueAccent),
       ),
       child: Scaffold(
-        backgroundColor: Colors.white,
+        backgroundColor: Colors.lightBlueAccent,
         appBar: AppBar(
           title: Text("正方教务系统登录"),
           elevation: 0,
-          backgroundColor: Colors.white,
+          backgroundColor: Colors.lightBlueAccent,
         ),
         body: Column(
           children: <Widget>[
