@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:zucc_helper/config/network_config.dart';
 
 //dart -> 面向对象语言 最好封装成类
@@ -7,7 +8,7 @@ class HttpRequest {
   //静态方法 每次就不需要创建一个实例
   static BaseOptions baseOptions = BaseOptions(baseUrl: BASE_URL, connectTimeout: TIME_OUT);
 
-  static Future request(String url, {String method = "get", Map<String, dynamic> params, data}) async {
+  static Future request({@required String url, String method = "get", Map<String, dynamic> params, data}) async {
     //1.必须创建一个dio实例
     final dio = Dio(baseOptions);
 
@@ -20,6 +21,5 @@ class HttpRequest {
     } on DioError catch (error) {
       throw error.response.data;
     }
-
   }
 }
