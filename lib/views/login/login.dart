@@ -22,6 +22,7 @@ class _LoginPageState extends State<LoginPage> with TickerProviderStateMixin{
 
 
   bool showForm = false;
+  String formType;
 
 
   @override
@@ -41,7 +42,14 @@ class _LoginPageState extends State<LoginPage> with TickerProviderStateMixin{
           delayTime: 500,
           curveType: Curves.fastOutSlowIn,
           widget: MaterialButton(
-            onPressed: (){},
+            onPressed: (){
+              logoUpAnimationController.forward();
+              buttonGroup.clear();
+              setState(() {
+                showForm = true;
+                formType = "register";
+              });
+            },
             child: Text("注册一个账号", style: TextStyle(color: Colors.white),),
             color: Colors.grey,
           ),
@@ -66,6 +74,7 @@ class _LoginPageState extends State<LoginPage> with TickerProviderStateMixin{
               buttonGroup.clear();
               setState(() {
                 showForm = true;
+                formType = "login";
               });
             },
             child: Text("登录", style: TextStyle(color: Colors.white),),
@@ -115,7 +124,9 @@ class _LoginPageState extends State<LoginPage> with TickerProviderStateMixin{
               ),
             ),
           ),
-          showForm?LoginForm():Container()
+          showForm ? LoginForm(
+            formType: formType,
+          ):Container()
         ],
       )
     );

@@ -1,17 +1,23 @@
-import 'dart:ffi';
-
 import 'package:flutter/material.dart';
 import 'package:zucc_helper/components/animations/scale_animation.dart';
+import 'package:zucc_helper/network/user_request.dart';
 
 
 
 
 class LoginForm extends StatefulWidget {
+  @required String formType;
+
+
+  LoginForm({
+    this.formType
+  });
+
+
+
+
   @override
   _LoginFormState createState() => _LoginFormState();
-
-
-
 
 }
 
@@ -20,6 +26,10 @@ class _LoginFormState extends State<LoginForm>  with TickerProviderStateMixin{
   //表单上升动画
   AnimationController formRiseController;
   Animation<double> formRiseAnimation;
+
+  String userName;
+  String password;
+
 
   @override
   void initState() {
@@ -66,7 +76,12 @@ class _LoginFormState extends State<LoginForm>  with TickerProviderStateMixin{
                           focusedBorder: UnderlineInputBorder(
                             borderSide: BorderSide(color: Colors.white , width: 2),
                           ),
-                        )
+                        ),
+                        onChanged: (value){
+                          setState(() {
+                            userName = value;
+                          });
+                        },
                     ),
                     SizedBox(height: 35,),
                     TextField(
@@ -79,7 +94,30 @@ class _LoginFormState extends State<LoginForm>  with TickerProviderStateMixin{
                           focusedBorder: UnderlineInputBorder(
                             borderSide: BorderSide(color: Colors.white , width: 2),
                           ),
-                        )
+                        ),
+                        onChanged: (value){
+                          setState(() {
+                            password = value;
+                          });
+                        },
+                    ),
+                    SizedBox(height: 35,),
+                    widget.formType == "login" ? Container() : TextField(
+                      autocorrect: true,
+                      decoration: InputDecoration(
+                        hintText: '请重复一遍密码',
+                        enabledBorder: UnderlineInputBorder(
+                          borderSide: BorderSide(color: Colors.white,),
+                        ),
+                        focusedBorder: UnderlineInputBorder(
+                          borderSide: BorderSide(color: Colors.white , width: 2),
+                        ),
+                      ),
+                      onChanged: (value){
+                        setState(() {
+                          password = value;
+                        });
+                      },
                     ),
                     SizedBox(height: 100,),
                     ScaleAnimation(
@@ -89,11 +127,15 @@ class _LoginFormState extends State<LoginForm>  with TickerProviderStateMixin{
                         height: 50,
                         child: FlatButton(
                           color: Colors.white,
-                          child: Text("登录", style: TextStyle(
-                            fontSize: 16,
-                            color: Colors.black
-                          ),),
-                          onPressed: (){},
+                          child: Text(
+                            widget.formType == "login" ? "登录" : "注册",
+                            style: TextStyle(
+                              fontSize: 16,
+                              color: Colors.black
+                            ),),
+                          onPressed: (){
+                            submitLoginData();
+                          },
                         ),
                       ),
                     )
@@ -110,7 +152,6 @@ class _LoginFormState extends State<LoginForm>  with TickerProviderStateMixin{
 
 
 
-
   initLoginFormAnimation(){
     formRiseController = AnimationController(vsync: this, duration: Duration(milliseconds: 500));
     formRiseAnimation = Tween(begin: 479.0, end: 180.0).animate(CurvedAnimation(parent: formRiseController, curve: Curves.fastOutSlowIn))
@@ -124,6 +165,14 @@ class _LoginFormState extends State<LoginForm>  with TickerProviderStateMixin{
     formRiseController.dispose();
   }
 
-
+  submitLoginData(){
+    UserRequest.submitRegisterData(userName, password)
+        .then((res){
+          print(res);
+        })
+        .catchError((error){
+          print(error);
+        });
+  }
 
 }
