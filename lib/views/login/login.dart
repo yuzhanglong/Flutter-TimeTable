@@ -84,10 +84,7 @@ class _LoginPageState extends State<LoginPage> with TickerProviderStateMixin{
       )
     ];
 
-
     initLoginPageAnimation();
-
-
   }
 
   @override
@@ -99,6 +96,8 @@ class _LoginPageState extends State<LoginPage> with TickerProviderStateMixin{
 
   @override
   Widget build(BuildContext context) {
+
+
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
@@ -126,7 +125,7 @@ class _LoginPageState extends State<LoginPage> with TickerProviderStateMixin{
           ),
           showForm ? LoginForm(
             formType: formType,
-          ):Container()
+          ) : Container()
         ],
       )
     );
@@ -145,7 +144,5 @@ class _LoginPageState extends State<LoginPage> with TickerProviderStateMixin{
   disposeLoginPageAnimation(){
     logoUpAnimationController.dispose();
   }
-
-
 }
 

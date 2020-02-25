@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:zucc_helper/components/drawer/main_drawer.dart';
+import 'package:zucc_helper/config/global.dart';
 import 'package:zucc_helper/components/topbar/top_bar_item.dart';
 import 'package:zucc_helper/config/global_config.dart';
-import 'package:zucc_helper/store/home_provider.dart';
-import 'package:zucc_helper/utils/data_helper.dart';
+import 'package:zucc_helper/store/table_provider.dart';
 import 'package:zucc_helper/utils/snack_bar.dart';
 import 'package:zucc_helper/views/home/child_cmp/classes_map/main_classes_map.dart';
 import 'package:zucc_helper/views/home/child_cmp/day_bar/day_bar.dart';
@@ -24,16 +24,23 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
   void initState() {
     // TODO: implement initState
     super.initState();
-    SharedPreferenceUtil.getString("user").then((value){
-      if(value == null){
-        _scaffoldkey.currentState.showSnackBar(Snack.info("请登录以获取课表"));
+
+    //此处处理比较棘手 先用延迟应付下
+    Future.delayed(Duration(milliseconds: 1000), () {
+      if(Global.user == null){
+        _scaffoldkey.currentState.showSnackBar(Snack.error("请登录"));
       }
+      else{
+        _scaffoldkey.currentState.showSnackBar(Snack.error("欢迎您   " + Global.user));
+      }
+
     });
+
   }
 
 
 
-  renewHomeData(condition, HomePrivider provider){
+  renewHomeData(condition, TableProvider provider){
     if(condition == 1){
       provider.addOneWeek();
     }
@@ -47,14 +54,13 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
 
-    HomePrivider provider = Provider.of<HomePrivider>(context);
-
+    TableProvider tableProvider = Provider.of<TableProvider>(context);
 
     return Scaffold(
       key: _scaffoldkey,
       appBar: AppBar(
         title: TopBarItem(
-          currentWeek: provider.weekNumber ,
+          currentWeek: tableProvider.weekNumber,
         ),
         backgroundColor: GlobalConfig.basicColor,
         elevation:0.0,
@@ -71,18 +77,18 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
 
           if(p.abs() > 1000){
             if(p > 0){
-              renewHomeData(0, provider);
+              renewHomeData(0, tableProvider);
             }
             else{
-              renewHomeData(1, provider);
+              renewHomeData(1, tableProvider);
             }
           }
-          provider.appendstuClasses();
+          tableProvider.appendstuClasses();
         },
         child: Column(
           children: <Widget>[
-            DayBarView(beginDay: provider.beginDate,),
-            HomeClassView(stuClasses: provider.stuClasses)
+            DayBarView(beginDay: tableProvider.beginDate,),
+            HomeClassView(stuClasses: tableProvider.stuClasses)
           ],
         ),
       ),

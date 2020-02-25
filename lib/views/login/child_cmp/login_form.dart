@@ -1,12 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:zucc_helper/components/animations/scale_animation.dart';
+import 'package:zucc_helper/models/response_model.dart';
 import 'package:zucc_helper/network/user_request.dart';
-
+import 'package:zucc_helper/store/profile_provider.dart';
+import 'package:zucc_helper/utils/snack_bar.dart';
+import 'package:provider/provider.dart';
+import 'package:zucc_helper/store/table_provider.dart';
 
 
 
 class LoginForm extends StatefulWidget {
-  @required String formType;
+  @required final String formType;
 
 
   LoginForm({
@@ -50,6 +54,41 @@ class _LoginFormState extends State<LoginForm>  with TickerProviderStateMixin{
 
   @override
   Widget build(BuildContext context) {
+
+    ProfileProvider profileProvider = Provider.of<ProfileProvider>(context);
+
+
+    gobackToHome(info){
+      Navigator.of(context).pop(info);
+    }
+
+    // 注册表单
+    gotoRegister(){
+      UserRequest.submitRegisterData(userName, password)
+          .then((res){
+            print(res);
+          })
+          .catchError((error){
+            var respose = ResponseCondition.fromMap(error);
+            Scaffold.of(context).showSnackBar(Snack.error(respose.information));
+          });
+    }
+
+    // 登录表单
+    gotoLogin(){
+      UserRequest.submitLoginData(userName, password)
+          .then((res){
+        var respose = ResponseToken.fromMap(res);
+        profileProvider.setUserInfo(userName, respose.token);
+        gobackToHome(respose.information);
+      })
+          .catchError((error){
+        print(error);
+        var respose = ResponseCondition.fromMap(error);
+        Scaffold.of(context).showSnackBar(Snack.error(respose.information));
+      });
+    }
+
     return Theme(
       data:  ThemeData(
         primaryColor: Colors.white,
@@ -134,7 +173,7 @@ class _LoginFormState extends State<LoginForm>  with TickerProviderStateMixin{
                               color: Colors.black
                             ),),
                           onPressed: (){
-                            submitLoginData();
+                            widget.formType == "login" ? gotoLogin() : gotoRegister();
                           },
                         ),
                       ),
@@ -164,15 +203,4 @@ class _LoginFormState extends State<LoginForm>  with TickerProviderStateMixin{
   disposeLoginFormAnimation(){
     formRiseController.dispose();
   }
-
-  submitLoginData(){
-    UserRequest.submitRegisterData(userName, password)
-        .then((res){
-          print(res);
-        })
-        .catchError((error){
-          print(error);
-        });
-  }
-
 }

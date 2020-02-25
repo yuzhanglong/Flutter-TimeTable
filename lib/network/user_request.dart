@@ -2,13 +2,24 @@ import 'package:zucc_helper/network/requests.dart';
 
 class UserRequest {
 
-  static Future submitLoginData(userName, password) {
+  static Future submitLoginData(userName, userPassword) {
     return HttpRequest.request(
-        url: "/user/login",
-        method: "get",
+        url: "/users/login",
+        method: "post",
         data: {
-          "userName": "userName",
-          "password": "password"
+          "userName": userName,
+          "userPassword": userPassword
+        }
+    );
+  }
+
+  static Future submitRegisterData(userName, userPassword) {
+    return HttpRequest.request(
+        url: "/users/register",
+        method: "post",
+        data: {
+          "userName": userName,
+          "userPassword": userPassword
         }
     );
   }

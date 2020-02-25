@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:zucc_helper/config/network_config.dart';
+import 'package:zucc_helper/models/response_model.dart';
 import 'package:zucc_helper/network/requests.dart';
+import 'package:zucc_helper/network/user_request.dart';
+import 'package:zucc_helper/network/utils_request.dart';
 import 'package:zucc_helper/utils/snack_bar.dart';
 import 'package:zucc_helper/views/connection/child_cmp/check_code.dart';
 
@@ -20,25 +23,7 @@ class _DataFormState extends State<DataForm> {
   String checkCode;
 
 
-
   GlobalKey <FormState> formKey = GlobalKey();
-
-  sendDataForm(userName, password, code){
-    HttpRequest.request("/utils/goto_login", method: "post", data: {
-      "userName":userName,
-      "password":password,
-      "checkCode":code,
-    }).then((res){
-
-    }).catchError((error){
-      Scaffold.of(context).showSnackBar(Snack.error(error['information']));
-    });
-  }
-
-  saveDataForm(){
-
-  }
-
 
 
 
@@ -161,5 +146,16 @@ class _DataFormState extends State<DataForm> {
         ),
       ),
     );
+  }
+
+  sendDataForm(userName, password, code){
+    UtilsRequest.getDataFromEducationSystem(userName, password, code)
+        .then((res){
+            print(res);
+          })
+        .catchError((error){
+          var respose = ResponseCondition.fromMap(error);
+          Scaffold.of(context).showSnackBar(Snack.error(respose.information));
+        });
   }
 }

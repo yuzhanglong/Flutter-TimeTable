@@ -22,8 +22,6 @@ class CustomRoute extends PageRouteBuilder{
           Animation<double> animaton2,
           Widget child,
           ){
-
-
          return ScaleTransition(
            scale: Tween(begin: 0.0,end: 1.0).animate(CurvedAnimation(
              parent: animaton1,
