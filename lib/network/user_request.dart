@@ -23,6 +23,18 @@ class UserRequest {
         }
     );
   }
+
+  // 鉴权
+  static Future checkAuth(token) {
+    return HttpRequest.request(
+        url: "/users/token",
+        method: "post",
+        data: {
+          "token": token,
+        }
+    );
+  }
+
 }
 
 

@@ -66,7 +66,8 @@ class _LoginFormState extends State<LoginForm>  with TickerProviderStateMixin{
     gotoRegister(){
       UserRequest.submitRegisterData(userName, password)
           .then((res){
-            print(res);
+            var respose = ResponseCondition.fromMap(res);
+            gobackToHome(respose.information);
           })
           .catchError((error){
             var respose = ResponseCondition.fromMap(error);
@@ -78,15 +79,14 @@ class _LoginFormState extends State<LoginForm>  with TickerProviderStateMixin{
     gotoLogin(){
       UserRequest.submitLoginData(userName, password)
           .then((res){
-        var respose = ResponseToken.fromMap(res);
-        profileProvider.setUserInfo(userName, respose.token);
-        gobackToHome(respose.information);
-      })
+            var respose = ResponseToken.fromMap(res);
+            profileProvider.setUserInfo(userName, respose.token);
+            gobackToHome(respose.information);
+          })
           .catchError((error){
-        print(error);
-        var respose = ResponseCondition.fromMap(error);
-        Scaffold.of(context).showSnackBar(Snack.error(respose.information));
-      });
+            var respose = ResponseCondition.fromMap(error);
+            Scaffold.of(context).showSnackBar(Snack.error(respose.information));
+          });
     }
 
     return Theme(

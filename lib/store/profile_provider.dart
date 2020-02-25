@@ -6,7 +6,7 @@ class ProfileProvider extends BaseProvder{
   // 用户相关
   String get user  => Global.user;
   String get token => Global.token;
-  bool get isLogin => user != null;
+  bool get isLogin => Global.isLogin;
 
 
   setUserInfo(user, token){
@@ -14,5 +14,4 @@ class ProfileProvider extends BaseProvder{
     Global.token = token;
     notifyListeners();
   }
-
 }
