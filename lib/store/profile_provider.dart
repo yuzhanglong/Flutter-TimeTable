@@ -12,6 +12,7 @@ class ProfileProvider extends BaseProvder{
   setUserInfo(user, token){
     Global.user = user;
     Global.token = token;
+    Global.isLogin = true;
     notifyListeners();
   }
 }

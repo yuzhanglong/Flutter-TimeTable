@@ -22,14 +22,14 @@ class _ConnectionPageState extends State<ConnectionPage> {
   Widget build(BuildContext context) {
     return Container(
       decoration:  BoxDecoration(
-        color: Colors.lightBlueAccent,
+        color: Colors.white,
       ),
       child: Scaffold(
-        backgroundColor: Colors.lightBlueAccent,
+        backgroundColor: Colors.white,
         appBar: AppBar(
           title: Text("正方教务系统登录"),
           elevation: 0,
-          backgroundColor: Colors.lightBlueAccent,
+          backgroundColor: Colors.white,
         ),
         body: Column(
           children: <Widget>[

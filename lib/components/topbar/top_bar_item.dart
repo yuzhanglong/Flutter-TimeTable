@@ -1,6 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:zucc_helper/config/global_config.dart';
+import 'package:zucc_helper/store/profile_provider.dart';
+import 'package:zucc_helper/utils/snack_bar.dart';
 import 'package:zucc_helper/views/connection/connection.dart';
 
 
@@ -94,8 +97,12 @@ class RightIconButtons extends StatefulWidget {
 }
 
 class _RightIconButtonsState extends State<RightIconButtons> {
+
   @override
   Widget build(BuildContext context) {
+
+    ProfileProvider profileProvider = Provider.of<ProfileProvider>(context);
+
     return Row(
       children: <Widget>[
         Container(
@@ -117,10 +124,14 @@ class _RightIconButtonsState extends State<RightIconButtons> {
             color: Colors.white,
             icon: Icon(Icons.file_download, color: GlobalConfig.fontColor,),
             onPressed: (){
-              if()
-              Navigator.push(context,
-                  MaterialPageRoute(builder: (context) =>ConnectionPage())
-              );
+              if(profileProvider.isLogin){
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) =>ConnectionPage())
+                );
+              }else{
+                Scaffold.of(context).showSnackBar(Snack.error("请登录后再执行导入教务处课表功能"));
+              }
+
             },
           ),
         ),

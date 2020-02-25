@@ -31,7 +31,8 @@ class _DataFormState extends State<DataForm> {
   Widget build(BuildContext context) {
     return Theme(
       data:  ThemeData(
-        primaryColor: Colors.blue,
+        primaryColor: Colors.white,
+        accentColor: Colors.blue
     ),
       child: Container(
         padding: EdgeInsets.fromLTRB(30, 20, 30, 0),
