@@ -1,7 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:zucc_helper/config/global_config.dart';
-import 'package:zucc_helper/router/custom_router.dart';
 import 'package:zucc_helper/views/connection/connection.dart';
 
 
@@ -118,10 +117,10 @@ class _RightIconButtonsState extends State<RightIconButtons> {
             color: Colors.white,
             icon: Icon(Icons.file_download, color: GlobalConfig.fontColor,),
             onPressed: (){
-              Navigator.of(context).push(
-                  CustomRoute(
-                      ConnectionPage()
-                ));
+              if()
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (context) =>ConnectionPage())
+              );
             },
           ),
         ),
