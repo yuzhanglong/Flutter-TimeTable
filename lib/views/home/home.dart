@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:zucc_helper/components/drawer/main_drawer.dart';
-import 'package:zucc_helper/config/global.dart';
 import 'package:zucc_helper/components/topbar/top_bar_item.dart';
 import 'package:zucc_helper/config/global_config.dart';
-import 'package:zucc_helper/models/response_model.dart';
-import 'package:zucc_helper/network/user_request.dart';
+import 'package:zucc_helper/store/profile_provider.dart';
 import 'package:zucc_helper/store/table_provider.dart';
 import 'package:zucc_helper/utils/snack_bar.dart';
 import 'package:zucc_helper/views/home/child_cmp/classes_map/main_classes_map.dart';
@@ -22,6 +20,10 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
   GlobalKey <ScaffoldState> _scaffoldkey = GlobalKey<ScaffoldState>();
 
 
+
+
+
+
   @override
   void initState() {
     // TODO: implement initState
@@ -29,14 +31,18 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
 
     //此处处理比较棘手 先用延迟应付下
     Future.delayed(Duration(milliseconds: 1000), () {
-      if(!Global.isLogin){
-        _scaffoldkey.currentState.showSnackBar(Snack.error("请登录"));
+      var p = Provider.of<ProfileProvider>(context);
+      if(p.isLogin){
+        _scaffoldkey.currentState.showSnackBar(Snack.success("欢迎您 " + p.user));
       }
       else{
-          _scaffoldkey.currentState.showSnackBar(Snack.success("欢迎您   " + Global.user));
+          _scaffoldkey.currentState.showSnackBar(Snack.error("请登录"));
       }
     });
   }
+
+
+
 
 
 
