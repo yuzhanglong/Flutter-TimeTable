@@ -89,7 +89,6 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
               renewHomeData(1, tableProvider);
             }
           }
-          tableProvider.appendstuClasses();
         },
         child: Column(
           children: <Widget>[

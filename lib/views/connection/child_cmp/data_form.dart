@@ -1,11 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:zucc_helper/config/network_config.dart';
 import 'package:zucc_helper/models/response_model.dart';
+import 'package:zucc_helper/models/table_model.dart';
 import 'package:zucc_helper/network/requests.dart';
 import 'package:zucc_helper/network/user_request.dart';
 import 'package:zucc_helper/network/utils_request.dart';
+import 'package:zucc_helper/store/profile_provider.dart';
+import 'package:zucc_helper/store/table_provider.dart';
 import 'package:zucc_helper/utils/snack_bar.dart';
 import 'package:zucc_helper/views/connection/child_cmp/check_code.dart';
+import 'package:provider/provider.dart';
 
 
 
@@ -29,6 +33,29 @@ class _DataFormState extends State<DataForm> {
 
   @override
   Widget build(BuildContext context) {
+
+    ProfileProvider profileProvider = Provider.of<ProfileProvider>(context);
+    TableProvider tableProvider = Provider.of<TableProvider>(context);
+
+    gobackToHome(info){
+      Navigator.of(context).pop(info);
+    }
+
+
+    sendDataForm(userName, password, code, token, owner){
+      UtilsRequest.getDataFromEducationSystem(userName, password, code, token, owner)
+          .then((res){
+            var respose = ResponseCondition.fromMap(res);
+            gobackToHome(respose.information);
+            tableProvider.getTablesData(profileProvider.user, profileProvider.token);
+          })
+          .catchError((error){
+            var respose = ResponseCondition.fromMap(error);
+            Scaffold.of(context).showSnackBar(Snack.error(respose.information));
+          });
+    }
+
+
     return Theme(
       data:  ThemeData(
         primaryColor: Colors.white,
@@ -109,9 +136,9 @@ class _DataFormState extends State<DataForm> {
                           onPressed: (){
                             formKey.currentState.save();
                             formKey.currentState.validate();
-                            sendDataForm(userName, password, checkCode);
+                            sendDataForm(userName, password, checkCode, profileProvider.token, profileProvider.user);
                           },
-                          child: Text("登录", style: TextStyle(
+                          child: Text("导入课表", style: TextStyle(
                             color: Colors.white,
                           ),)
                       ),
@@ -147,16 +174,5 @@ class _DataFormState extends State<DataForm> {
         ),
       ),
     );
-  }
-
-  sendDataForm(userName, password, code){
-    UtilsRequest.getDataFromEducationSystem(userName, password, code)
-        .then((res){
-            print(res);
-          })
-        .catchError((error){
-          var respose = ResponseCondition.fromMap(error);
-          Scaffold.of(context).showSnackBar(Snack.error(respose.information));
-        });
   }
 }

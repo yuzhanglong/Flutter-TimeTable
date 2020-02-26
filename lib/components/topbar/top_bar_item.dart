@@ -127,7 +127,9 @@ class _RightIconButtonsState extends State<RightIconButtons> {
               if(profileProvider.isLogin){
                 Navigator.push(context,
                     MaterialPageRoute(builder: (context) =>ConnectionPage())
-                );
+                ).then((res){
+                  Scaffold.of(context).showSnackBar(Snack.success(res));
+                });
               }else{
                 Scaffold.of(context).showSnackBar(Snack.error("请登录后再执行导入教务处课表功能"));
               }

@@ -18,12 +18,16 @@ class Global{
     prefs = await SharedPreferences.getInstance();
     user = prefs.getString("user");
     token = prefs.getString("token");
-    UserRequest.checkAuth(token).then((res){
-      isLogin = true;
-    }).catchError((err){
+    if(token != null){
+      UserRequest.checkAuth(token).then((res){
+        isLogin = true;
+      }).catchError((err){
+        isLogin = false;
+        clearInfo();
+      });
+    }else{
       isLogin = false;
-      clearInfo();
-    });
+    }
   }
 
 

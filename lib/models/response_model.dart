@@ -7,7 +7,6 @@ class ResponseCondition{
     this.status = json["status"];
     this.information = json["information"];
   }
-
 }
 
 

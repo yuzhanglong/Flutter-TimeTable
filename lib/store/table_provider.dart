@@ -1,3 +1,5 @@
+import 'package:zucc_helper/models/table_model.dart';
+import 'package:zucc_helper/network/table_request.dart';
 import 'package:zucc_helper/store/base.dart';
 
 
@@ -14,24 +16,8 @@ class TableProvider extends BaseProvder{
   //topbar的当前周次
   int weekNumber = 1;
 
-
-  // 添加一节课
-  appendstuClasses(){
-    stuClasses.add(
-      {
-        "classTime": {
-          "begin": 0,
-          "end": 4
-        },
-        "name": "微积分Ⅱ(甲)",
-        "place": "教三301",
-        "teacher": "童雯雯",
-        "weekDay": 1,
-        "weekDuring": "1-16"
-      }
-    );
-    notifyListeners();
-  }
+  // 用户拥有的所有课表
+  List tables = [];
 
     //屏幕左划
   addOneWeek(){
@@ -49,6 +35,18 @@ class TableProvider extends BaseProvder{
       beginDate = beginDate.subtract(Duration(days: 7));
       weekNumber--;
     }
+    notifyListeners();
+  }
+
+
+  // 获取用户课表数据
+  getTablesData(user, token){
+    TableRequest.getUserTables(user, token).then((res){
+      var t = res['tables'][0]['classes'];
+      stuClasses = t;
+      print(stuClasses);
+
+    });
     notifyListeners();
   }
 

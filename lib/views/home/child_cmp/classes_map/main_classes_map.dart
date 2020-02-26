@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:zucc_helper/config/global_config.dart';
 import 'package:zucc_helper/config/school_data.dart';
+import 'package:zucc_helper/models/table_model.dart';
 import 'package:zucc_helper/views/home/child_cmp/classes_map/class_card_item.dart';
 import 'package:zucc_helper/views/home/child_cmp/classes_map/class_time_item.dart';
 
@@ -38,29 +39,30 @@ class _HomeClassViewState extends State<HomeClassView> {
       }
 
       for(int k = 0; k < widget.stuClasses.length; k++){
-        var singleClass = widget.stuClasses[k];
+        var singleClass = Class.fromMap(widget.stuClasses[k]);
+
         int classWeekDay;
         int classTime;
         int classTime2;
         //只有一节课的情况
-        if(singleClass["classTime"]['begin'] == singleClass["classTime"]['end']){
-          classWeekDay = singleClass["weekDay"];
-          classTime = singleClass["classTime"]['begin'];
+        if(singleClass.beginTime == singleClass.endTime){
+          classWeekDay = singleClass.weekDay;
+          classTime = singleClass.beginTime;
           var pos = 8 * classTime + classWeekDay;
           allItems[pos] = ClassCard(
             baseColor: Colors.lightBlueAccent,
-            className: singleClass['name'],
+            className: singleClass.className,
           );
         }
         //多节课程连续
         else{
-          classWeekDay = singleClass["weekDay"];
-          classTime = singleClass["classTime"]['begin'];
-          classTime2 = singleClass["classTime"]['end'];
+          classWeekDay = singleClass.weekDay;
+          classTime = singleClass.beginTime;
+          classTime2 = singleClass.endTime;
           for(int t = classTime; t <= classTime2; t++){
             allItems[8 * t + classWeekDay] = ClassCard(
               baseColor: Colors.lightBlueAccent,
-              className: singleClass['name']
+              className: singleClass.className
             );
           }
         }
