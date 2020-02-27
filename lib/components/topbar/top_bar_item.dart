@@ -104,6 +104,10 @@ class _RightIconButtonsState extends State<RightIconButtons> {
   @override
   Widget build(BuildContext context) {
 
+
+    TableProvider tableProvider = Provider.of<TableProvider>(context);
+
+
     ProfileProvider profileProvider = Provider.of<ProfileProvider>(context);
 
     return Row(
@@ -131,6 +135,7 @@ class _RightIconButtonsState extends State<RightIconButtons> {
                 Navigator.push(context,
                     MaterialPageRoute(builder: (context) =>ConnectionPage())
                 ).then((res){
+                  tableProvider.initTables();
                   Scaffold.of(context).showSnackBar(Snack.success(res));
                 });
               }else{

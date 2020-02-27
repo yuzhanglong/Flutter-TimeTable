@@ -38,6 +38,13 @@ class _ClassCardState extends State<ClassCard> with TickerProviderStateMixin{
     cardController.forward();
   }
 
+
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    super.dispose();
+    cardController.dispose();
+  }
   @override
   void initState() {
     // TODO: implement initState
@@ -49,6 +56,7 @@ class _ClassCardState extends State<ClassCard> with TickerProviderStateMixin{
     ));
     cardController.forward();
   }
+
 
 
 

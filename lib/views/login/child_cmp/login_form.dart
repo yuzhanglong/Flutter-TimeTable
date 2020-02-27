@@ -27,6 +27,7 @@ class LoginForm extends StatefulWidget {
 
 class _LoginFormState extends State<LoginForm>  with TickerProviderStateMixin{
 
+
   //表单上升动画
   AnimationController formRiseController;
   Animation<double> formRiseAnimation;
@@ -55,6 +56,7 @@ class _LoginFormState extends State<LoginForm>  with TickerProviderStateMixin{
   @override
   Widget build(BuildContext context) {
 
+    TableProvider tableProvider = Provider.of<TableProvider>(context);
     ProfileProvider profileProvider = Provider.of<ProfileProvider>(context);
 
 

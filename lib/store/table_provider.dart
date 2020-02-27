@@ -36,8 +36,9 @@ class TableProvider extends BaseProvder{
         var t = StuTable.fromMap(res['tables'][0]);
         activeTableName = t.tableName;
       }
+      notifyListeners();
     });
-    notifyListeners();
+
   }
 
 

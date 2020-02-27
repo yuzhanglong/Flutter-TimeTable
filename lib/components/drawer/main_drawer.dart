@@ -34,7 +34,6 @@ class _MainDrawerState extends State<MainDrawer> {
     List<Widget> getExpansionChildren(){
       List<Widget> tmp = [];
       var t = tableProvider.tables;
-      print(t);
       for(int i = 0; i < t.length; i++){
         var singleTable = StuTable.fromMap(t[i]);
         tmp.add(
@@ -94,6 +93,7 @@ class _MainDrawerState extends State<MainDrawer> {
                 ).then((res){
                   Scaffold.of(context).openEndDrawer();
                   Scaffold.of(context).showSnackBar(Snack.success(res));
+                  tableProvider.initTables();
                 });
               },
               leading: Icon(Icons.perm_identity),
