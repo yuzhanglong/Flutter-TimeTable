@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:zucc_helper/components/drawer/child_cmp/better_drawer.dart';
+import 'package:zucc_helper/models/table_model.dart';
 import 'package:zucc_helper/store/profile_provider.dart';
 import 'package:zucc_helper/utils/snack_bar.dart';
 import 'package:zucc_helper/views/login/login.dart';
@@ -22,9 +23,32 @@ class _MainDrawerState extends State<MainDrawer> {
   Widget build(BuildContext context) {
 
     ProfileProvider profileProvider = Provider.of<ProfileProvider>(context);
+    TableProvider tableProvider = Provider.of<TableProvider>(context);
+
+
 
     getUserName(){
       return profileProvider.user == null ? Text("请登录") : Text(profileProvider.user);
+    }
+
+    List<Widget> getExpansionChildren(){
+      List<Widget> tmp = [];
+      var t = tableProvider.tables;
+      print(t);
+      for(int i = 0; i < t.length; i++){
+        var singleTable = StuTable.fromMap(t[i]);
+        tmp.add(
+          ListTile(
+            title: Text(singleTable.tableName),
+            onTap: (){
+              tableProvider.changeHomeClasses(i);
+              //抽屉关闭
+              Scaffold.of(context).openEndDrawer();
+            },
+          ),
+        );
+      }
+      return tmp;
     }
 
     return BetterDrawer(
@@ -34,7 +58,7 @@ class _MainDrawerState extends State<MainDrawer> {
           // ListView => 装载抽屉的部件
           children: <Widget>[
             Container(
-              height: 180,
+              height: 170,
               child: DrawerHeader(
                   padding: EdgeInsets.all(0),
                   // DrawerHeader =>抽屉的头部
@@ -48,12 +72,11 @@ class _MainDrawerState extends State<MainDrawer> {
                   )
               ),
             ),
-            ListTile(
-              onTap: (){
-                print("kcb");
-              },
+            ExpansionTile(
+              backgroundColor: Colors.transparent,
               leading: Icon(Icons.library_books),
-              title: Text("课程表"),
+              title: Text("我的课表"),
+              children: getExpansionChildren()
             ),
             ListTile(
               onTap: (){

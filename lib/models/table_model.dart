@@ -1,3 +1,19 @@
+class StuTable{
+  String tableName;
+  String tableId;
+
+
+
+  StuTable.fromMap(Map<String, dynamic> json) {
+    this.tableId = json['tableId'];
+    this.tableName = json['tableName'];
+  }
+}
+
+
+
+
+
 class Class{
   // 课程开始时间
   int beginTime;

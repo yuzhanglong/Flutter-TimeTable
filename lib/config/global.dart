@@ -1,5 +1,5 @@
-import 'package:flutter/scheduler.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:zucc_helper/network/table_request.dart';
 import 'package:zucc_helper/network/user_request.dart';
 
 class Global{
@@ -11,6 +11,9 @@ class Global{
   static String token;
   static bool isLogin;
 
+
+  // 该用户所拥有的所有课表
+  static List tables = [];
 
 
   // 初始化全局信息
@@ -39,5 +42,9 @@ class Global{
 
   static clearInfo(){
     prefs.clear();
+  }
+
+  static Future initHomeTable(){
+    return TableRequest.getUserTables(user, token);
   }
 }
