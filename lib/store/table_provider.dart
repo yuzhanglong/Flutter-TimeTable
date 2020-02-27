@@ -1,4 +1,5 @@
 import 'package:zucc_helper/config/global.dart';
+import 'package:zucc_helper/models/table_model.dart';
 import 'package:zucc_helper/store/base.dart';
 
 
@@ -17,6 +18,9 @@ class TableProvider extends BaseProvder{
   //当前显示的课表数组
   List stuClasses = [];
 
+  //当前活跃的课表名称
+  String activeTableName = "";
+
   //构造函数
   TableProvider(){
     initTables();
@@ -29,6 +33,8 @@ class TableProvider extends BaseProvder{
       tables = res['tables'];
       if(res['tables'].length != 0){
         stuClasses = res['tables'][0]['classes'];
+        var t = StuTable.fromMap(res['tables'][0]);
+        activeTableName = t.tableName;
       }
     });
     notifyListeners();
@@ -59,6 +65,7 @@ class TableProvider extends BaseProvder{
   changeHomeClasses(index){
     print(index);
     stuClasses = tables[index]['classes'];
+    activeTableName = tables[index]['tableName'];
     notifyListeners();
   }
 }

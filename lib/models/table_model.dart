@@ -43,6 +43,6 @@ class Class{
     this.place = json["place"];
     this.weekDay = json['weekDay'];
     this.weekDuringStart = json['weekDuringStart'];
-    this.weekDuringStart = json['weekDuringEnd'];
+    this.weekDuringEnd = json['weekDuringEnd'];
   }
 }

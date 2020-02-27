@@ -1,7 +1,12 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:zucc_helper/config/global_config.dart';
 import 'package:zucc_helper/config/school_data.dart';
+import 'package:zucc_helper/models/school_model.dart';
 import 'package:zucc_helper/models/table_model.dart';
+import 'package:zucc_helper/store/table_provider.dart';
 import 'package:zucc_helper/views/home/child_cmp/classes_map/class_card_item.dart';
 import 'package:zucc_helper/views/home/child_cmp/classes_map/class_time_item.dart';
 
@@ -20,27 +25,42 @@ class HomeClassView extends StatefulWidget {
 }
 
 class _HomeClassViewState extends State<HomeClassView> {
+
   @override
   Widget build(BuildContext context) {
 
+    TableProvider tableProvider = Provider.of<TableProvider>(context);
+
+    // 开始构造课程表
     List<Widget> makeList(){
-      Map schoolData = SchoolData.zucc;
+      var schoolData = School.fromMap(SchoolData.zucc);
       List<Widget> allItems = List();
 
-      for(int i = 0; i < schoolData['timeTable']['classNumOneDay']; i++){
+      // 左侧时间表
+      for(int i = 0; i < schoolData.classNumOneDay; i++){
         allItems.add(ClassTime(
           classNum: (i + 1).toString(),
-          startTime: schoolData['timeTable']['time'][i][0],
-          endTime: schoolData['timeTable']['time'][i][1],
+          startTime: schoolData.time[i][0],
+          endTime: schoolData.time[i][1],
         ));
         for(int j = 0; j <= 6; j++){
           allItems.add(ClassCard());
         }
       }
 
+      // 中间的课表
       for(int k = 0; k < widget.stuClasses.length; k++){
         var singleClass = Class.fromMap(widget.stuClasses[k]);
+        var w = tableProvider.weekNumber;
 
+        // 判断是否在周次范围内
+        if( w > singleClass.weekDuringEnd || w < singleClass.weekDuringStart) continue;
+
+        // 判断单双周
+        if(singleClass.isGapWeek != 0){
+          if(singleClass.isGapWeek == 1 && w % 2 == 0) continue;  //逢单周
+          if(singleClass.isGapWeek == 2 && w % 2 != 0) continue;  //逢双周
+        }
         int classWeekDay;
         int classTime;
         int classTime2;

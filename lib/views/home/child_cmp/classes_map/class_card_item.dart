@@ -45,7 +45,7 @@ class _ClassCardState extends State<ClassCard> with TickerProviderStateMixin{
     cardController = AnimationController(duration: const Duration(milliseconds: 800), vsync: this);
     cardAnimation = Tween(begin: 0.1, end: 1.0).animate(CurvedAnimation(
       parent: cardController,
-      curve: Curves.bounceInOut,
+      curve: Curves.fastOutSlowIn,
     ));
     cardController.forward();
   }
