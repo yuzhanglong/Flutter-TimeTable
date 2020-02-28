@@ -76,6 +76,18 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
+  flutter_localizations:
+    dependency: "direct main"
+    description: flutter
+    source: sdk
+    version: "0.0.0"
+  flutter_picker:
+    dependency: "direct main"
+    description:
+      name: flutter_picker
+      url: "https://dart-pub.mirrors.sjtug.sjtu.edu.cn"
+    source: hosted
+    version: "1.1.0"
   flutter_test:
     dependency: "direct dev"
     description: flutter
@@ -95,6 +107,13 @@ packages:
       url: "https://dart-pub.mirrors.sjtug.sjtu.edu.cn"
     source: hosted
     version: "2.1.4"
+  intl:
+    dependency: transitive
+    description:
+      name: intl
+      url: "https://dart-pub.mirrors.sjtug.sjtu.edu.cn"
+    source: hosted
+    version: "0.16.0"
   matcher:
     dependency: transitive
     description:
