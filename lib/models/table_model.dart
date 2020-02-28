@@ -56,6 +56,7 @@ class StuClass{
     this.weekDay = json['weekDay'];
     this.weekDuringStart = json['weekDuringStart'];
     this.weekDuringEnd = json['weekDuringEnd'];
+    this.isGapWeek = json['isGapWeek'];
   }
 
   checkIsLegal(){
