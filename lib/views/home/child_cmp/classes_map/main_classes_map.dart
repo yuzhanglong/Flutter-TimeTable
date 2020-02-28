@@ -93,7 +93,8 @@ class _HomeClassViewState extends State<HomeClassView> {
 
 
     return Container(
-      height: 647,
+      // 52 topbar的高度  80 顶部appbar的高度
+      height: MediaQuery.of(context).size.height - 52 - 81,
       color: GlobalConfig.basicColor,
       child: ScrollConfiguration(
         behavior: RefuseBlueActivation(),

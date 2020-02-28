@@ -327,7 +327,7 @@ class _CreateClassState extends State<CreateClass> with TickerProviderStateMixin
             ),
           ),
           Container(
-            height: 479,
+            height: MediaQuery.of(context).size.height - 300,
             child: ListView(
               children: makeClassCard(),
             )

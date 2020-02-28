@@ -118,7 +118,7 @@ class _ClassCardState extends State<ClassCard> with TickerProviderStateMixin{
               widget.className,
               overflow: TextOverflow.ellipsis,
               softWrap: true,
-              maxLines: 4,
+              maxLines: 3,
               textAlign: TextAlign.center,
               style: TextStyle(
                   fontSize: 12,

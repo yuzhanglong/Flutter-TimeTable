@@ -20,7 +20,7 @@ class _DayBarItemState extends State<DayBarItem> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: 45,
+      width: MediaQuery.of(context).size.width / 8,
       child: Column(
         children: <Widget>[
           Text(widget.targetDay, style: TextStyle(
