@@ -62,7 +62,8 @@ class StuClass{
     if(this.className == null || this.className == "") return "请填写课程名称";
     if(this.weekDay == null) return "请选择星期";
     if(this.beginTime == null) return "请填写起止时间";
-    if(this.weekDuringStart == null) return "请填写周次";
+    if(this.weekDuringStart == null || this.weekDuringStart == 0 || this.weekDuringEnd == 0) return "请填写周次";
+
     return "pass";
   }
 
