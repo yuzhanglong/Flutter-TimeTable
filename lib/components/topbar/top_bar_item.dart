@@ -6,6 +6,7 @@ import 'package:zucc_helper/store/profile_provider.dart';
 import 'package:zucc_helper/store/table_provider.dart';
 import 'package:zucc_helper/utils/snack_bar.dart';
 import 'package:zucc_helper/views/connection/connection.dart';
+import 'package:zucc_helper/views/create_class/create_class.dart';
 
 
 class TopBarItem extends StatefulWidget {
@@ -119,7 +120,14 @@ class _RightIconButtonsState extends State<RightIconButtons> {
             focusColor: Colors.transparent,
             color: Colors.white,
             icon:Icon(Icons.add, color: GlobalConfig.fontColor),
-            onPressed: (){},
+            onPressed: (){
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (context) =>CreateClass())
+              ).then((res){
+                tableProvider.initTables();
+                Scaffold.of(context).showSnackBar(Snack.success(res));
+              });
+            },
           ),
         ),
         Container(

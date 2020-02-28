@@ -50,7 +50,7 @@ class _HomeClassViewState extends State<HomeClassView> {
 
       // 中间的课表
       for(int k = 0; k < widget.stuClasses.length; k++){
-        var singleClass = Class.fromMap(widget.stuClasses[k]);
+        var singleClass = StuClass.fromMap(widget.stuClasses[k]);
         var w = tableProvider.weekNumber;
 
         // 判断是否在周次范围内

@@ -14,4 +14,17 @@ class TableRequest{
     );
   }
 
+  // 创建一节课
+  static Future createOneClass(userName, token, tableId, classData) {
+    return HttpRequest.request(
+        url: "/utils/create_one_class",
+        method: "post",
+        data: {
+          "userName": userName,
+          "token": token,
+          "classData": classData,
+          "tableId": tableId,
+        }
+    );
+  }
 }

@@ -21,6 +21,8 @@ class TableProvider extends BaseProvder{
   //当前活跃的课表名称
   String activeTableName = "";
 
+  String activeTableId = "";
+
   //构造函数
   TableProvider(){
     initTables();
@@ -29,16 +31,16 @@ class TableProvider extends BaseProvder{
 
   //用户所拥有的课程表的初始化
   void initTables() async {
-    Global.initHomeTable().then((res){
-      tables = res['tables'];
-      if(res['tables'].length != 0){
-        stuClasses = res['tables'][0]['classes'];
-        var t = StuTable.fromMap(res['tables'][0]);
-        activeTableName = t.tableName;
-      }
-      notifyListeners();
-    });
-
+      Global.initHomeTable().then((res){
+        tables = res['tables'];
+        if(res['tables'].length != 0){
+          stuClasses = res['tables'][0]['classes'];
+          var t = StuTable.fromMap(res['tables'][0]);
+          activeTableName = t.tableName;
+          activeTableId = t.tableId;
+        }
+        notifyListeners();
+      }).catchError((err){});
   }
 
 

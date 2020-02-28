@@ -14,7 +14,7 @@ class StuTable{
 
 
 
-class Class{
+class StuClass{
   // 课程开始时间
   int beginTime;
   // 课程结束时间
@@ -34,8 +34,20 @@ class Class{
   //课程名称
   String className;
 
+  StuClass({
+  this.beginTime,
+    this.endTime,
+    this.teacher,
+    this.place,
+    this.className,
+    this.weekDuringEnd,
+    this.isGapWeek,
+    this.weekDuringStart,
+    this.weekDay
+  });
 
-  Class.fromMap(Map<String, dynamic> json) {
+
+  StuClass.fromMap(Map<String, dynamic> json) {
     this.beginTime = json['beginTime'];
     this.endTime = json['endTime'];
     this.teacher = json["teacher"];
@@ -44,5 +56,43 @@ class Class{
     this.weekDay = json['weekDay'];
     this.weekDuringStart = json['weekDuringStart'];
     this.weekDuringEnd = json['weekDuringEnd'];
+  }
+
+  checkIsLegal(){
+    if(this.className == null || this.className == "") return "请填写课程名称";
+    if(this.weekDay == null) return "请选择星期";
+    if(this.beginTime == null) return "请填写起止时间";
+    if(this.weekDuringStart == null) return "请填写周次";
+    return "pass";
+  }
+
+  checkBeginAndEndLegal(){
+    return this.beginTime <= this.endTime;
+  }
+
+  checkWeekDuringLegal(){
+    return this.weekDuringStart <= this.weekDuringEnd;
+  }
+
+  @override
+  String toString() {
+    // TODO: implement toString
+    return "${this.beginTime}, ${this.endTime}, ${this.teacher}, ${this.place}, "
+        "${this.className}, ${this.weekDuringStart}, ${this.weekDuringEnd},"
+        " ${this.isGapWeek}, ${this.weekDay}";
+  }
+
+  toJson(){
+    return {
+      'className': this.className,
+      'beginTime': this.beginTime,
+      'endTime': this.endTime,
+      'teacher': this.teacher,
+      'place': this.place,
+      'weekDay': this.weekDay,
+      'weekDuringStart': this.weekDuringStart,
+      'weekDuringEnd': this.weekDuringEnd,
+      'isGapWeek': this.isGapWeek
+    };
   }
 }
