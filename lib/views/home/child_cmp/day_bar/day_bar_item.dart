@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:zucc_helper/config/global_config.dart';
 
 class DayBarItem extends StatefulWidget {
   final String targetDay;
   final String targetWeekDay;
+  final Color baseColor;
 
   DayBarItem({
     this.targetDay,
-    this.targetWeekDay
+    this.targetWeekDay,
+    this.baseColor,
   });
 
 
@@ -23,14 +24,14 @@ class _DayBarItemState extends State<DayBarItem> {
       child: Column(
         children: <Widget>[
           Text(widget.targetDay, style: TextStyle(
-              color: GlobalConfig.fontColor,
+              color: widget.baseColor,
               fontWeight: FontWeight.bold,
               fontSize: 10
             )
           ),
-          SizedBox(height: 3),
+          SizedBox(height: 5),
           Text(widget.targetWeekDay, style: TextStyle(
-              color: GlobalConfig.fontColor,
+              color: widget.baseColor,
               fontWeight: FontWeight.bold,
               fontSize: 12
             )

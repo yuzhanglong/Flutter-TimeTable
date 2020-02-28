@@ -31,7 +31,8 @@ List<Widget> getDayBarItems(List <DateTime> daysData){
   //创建表头 上面月份 下面今天日期
   totalItems.add(DayBarItem(
     targetDay: TableDate.getMonthSimple(daysData[0].month - 1),
-    targetWeekDay: " ",
+    targetWeekDay: currentTime.year.toString(),
+    baseColor: GlobalConfig.fontColor,
   ));
 
 
@@ -40,6 +41,7 @@ List<Widget> getDayBarItems(List <DateTime> daysData){
     totalItems.add(DayBarItem(
       targetDay: daysData[i].day.toString(),
       targetWeekDay: TableDate.getWeekDaySimple(i),
+      baseColor: i != 6 && i != 5 ? GlobalConfig.fontColor: Color.fromARGB(255, 247, 171, 218),
     ));
   }
   return totalItems;

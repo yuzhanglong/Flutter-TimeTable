@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:flutter_picker/flutter_picker.dart';
 import 'package:provider/provider.dart';
@@ -17,9 +16,14 @@ class CreateClass extends StatefulWidget {
   _CreateClassState createState() => _CreateClassState();
 }
 
-class _CreateClassState extends State<CreateClass> {
+class _CreateClassState extends State<CreateClass> with TickerProviderStateMixin{
 
   GlobalKey <ScaffoldState> _scaffoldkey = GlobalKey<ScaffoldState>();
+
+  AnimationController animationController;
+  Animation<double> animation;
+
+
 
 
   List <Widget> makeClassCard(){
@@ -192,6 +196,21 @@ class _CreateClassState extends State<CreateClass> {
   }
   var singleClass = StuClass();
 
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    animationController = AnimationController(vsync: this, duration: Duration(milliseconds: 1000));
+    animation = Tween(begin: 0.0, end: 220.0).animate(CurvedAnimation(
+        parent: animationController, curve: Curves.fastOutSlowIn)
+    )
+      ..addListener(() {
+        setState(() {});
+      });
+    animationController.forward();
+  }
+
   @override
   Widget build(BuildContext context) {
     ProfileProvider profileProvider = Provider.of<ProfileProvider>(context);
@@ -238,7 +257,7 @@ class _CreateClassState extends State<CreateClass> {
       body: Column(
         children: <Widget>[
           Container(
-            height: 220,
+            height: animation.value,
             decoration: BoxDecoration(
               color: Colors.white,
               //圆角幅度
@@ -250,7 +269,7 @@ class _CreateClassState extends State<CreateClass> {
             ),
             child: Container(
               padding: EdgeInsets.fromLTRB(20, 5, 20, 0),
-              child: Column(
+              child: ListView(
                 children: <Widget>[
                   //课程基本设置  课程的名称 教师的姓名 课程对应格子的颜色
                   TextField(
