@@ -1,50 +1,62 @@
+import 'dart:convert';
+
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:zucc_helper/models/user_model.dart';
 import 'package:zucc_helper/network/table_request.dart';
-import 'package:zucc_helper/network/user_request.dart';
 
 class Global{
   static SharedPreferences prefs;
 
 
-  // auth
-  static String user;
-  static String token;
-  static bool isLogin;
+  // 权限相关
+  static UserAuth userAuth = UserAuth();
 
 
-  // 该用户所拥有的所有课表
-  static List tables = [];
+  // 个人信息相关
+  static Profile profile = Profile();
 
 
   // 初始化全局信息
   static Future init() async {
+    // 权限相关
     prefs = await SharedPreferences.getInstance();
-    user = prefs.getString("user");
-    token = prefs.getString("token");
-    if(token != null){
-      UserRequest.checkAuth(token).then((res){
-        isLogin = true;
-      }).catchError((err){
-        isLogin = false;
-        clearInfo();
-      });
-    }else{
-      isLogin = false;
+    userAuth.initAuth(prefs.getString("user"), prefs.getString("token"));
+    // 存在用户信息
+    if(userAuth.token != null){
+      userAuth.checkAuth()
+          .then((res){
+            userAuth.isLogin = true;
+          })
+          .catchError((err){
+            clearInfo();
+          });
+    }
+
+    // 获取profile json 字符串
+    var p = prefs.getString("profile");
+    print(p);
+    if (p != null) {
+      try {
+        profile.fromJson(jsonDecode(p));
+      } catch (error) {
+        print(error);
+      }
     }
   }
 
 
   // 数据持久化
   static setInfo(){
-    prefs.setString("user", user);
-    prefs.setString("token", token);
+    userAuth.setAuth();
+    profile.setProfile();
   }
+
 
   static clearInfo(){
     prefs.clear();
   }
 
   static Future initHomeTable(){
-    return TableRequest.getUserTables(user, token);
+    return TableRequest.getUserTables(userAuth.userName, userAuth.token);
   }
 }

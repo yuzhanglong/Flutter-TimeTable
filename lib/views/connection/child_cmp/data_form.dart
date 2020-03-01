@@ -134,7 +134,7 @@ class _DataFormState extends State<DataForm> {
                           onPressed: (){
                             formKey.currentState.save();
                             formKey.currentState.validate();
-                            sendDataForm(userName, password, checkCode, profileProvider.token, profileProvider.user);
+                            sendDataForm(userName, password, checkCode, profileProvider.userAuth.token, profileProvider.userAuth.userName);
                           },
                           child: Text("导入课表", style: TextStyle(
                             color: Colors.white,

@@ -32,8 +32,8 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
     //此处处理比较棘手 先用延迟应付下
     Future.delayed(Duration(milliseconds: 1000), () {
       var p = Provider.of<ProfileProvider>(context);
-      if(p.isLogin){
-        _scaffoldkey.currentState.showSnackBar(Snack.success("欢迎您 " + p.user));
+      if(p.userAuth.isLogin){
+        _scaffoldkey.currentState.showSnackBar(Snack.success("欢迎您 " + p.userAuth.userName));
       }
       else{
           _scaffoldkey.currentState.showSnackBar(Snack.error("请登录"));

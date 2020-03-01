@@ -47,4 +47,13 @@ class TableDate{
   }
 
 
+  //取两天之间的周数
+  static getWeeksGap(DateTime begin, DateTime now){
+    // 星期数的相差
+    var gapWeekDay = now.weekday - begin.weekday;
+    //相差天数
+    var diffDay = now.difference(begin).inDays;
+    if(diffDay < 7 && gapWeekDay < 0) return 2;
+    else return diffDay / 7 + 1;
+  }
 }

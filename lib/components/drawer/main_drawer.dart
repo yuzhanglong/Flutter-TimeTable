@@ -8,6 +8,7 @@ import 'package:zucc_helper/utils/snack_bar.dart';
 import 'package:zucc_helper/views/login/login.dart';
 import 'package:provider/provider.dart';
 import 'package:zucc_helper/store/table_provider.dart';
+import 'package:zucc_helper/views/settings/settings.dart';
 
 
 class MainDrawer extends StatefulWidget {
@@ -29,7 +30,7 @@ class _MainDrawerState extends State<MainDrawer> {
 
 
     String getUserName(){
-      return profileProvider.user == null ? "请登录" : profileProvider.user;
+      return profileProvider.userAuth.userName == null ? "请登录" : profileProvider.userAuth.userName;
     }
 
     List<Widget> getExpansionChildren(){
@@ -66,20 +67,35 @@ class _MainDrawerState extends State<MainDrawer> {
                     decoration: BoxDecoration(
                       color: Color.fromARGB(255, 131, 137, 184),
                     ),
-                    child: Center(
-                        child: Container(
-                            padding: EdgeInsets.fromLTRB(0, 22, 0, 0),
-                            child: Column(
-                              children: <Widget>[
-                                Icon(Icons.account_circle, size: 70, color: Colors.white,),
-                                SizedBox(height: 15,),
-                                Text(
-                                  getUserName(),
-                                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 25, color: Colors.white),
-                                ),
-                              ],
-                            )
-                        )
+                    child: GestureDetector(
+                      onTap: (){
+                        if(profileProvider.userAuth.isLogin){
+                          Navigator.push(context, MaterialPageRoute(builder: (context) =>SettingPage()));
+                        }
+                        else{
+                          Navigator.push(context, MaterialPageRoute(builder: (context) =>LoginPage()))
+                              .then((res){
+                            Scaffold.of(context).openEndDrawer();
+                            Scaffold.of(context).showSnackBar(Snack.success(res));
+                            tableProvider.initTables();
+                          });
+                        }
+                      },
+                      child: Center(
+                          child: Container(
+                              padding: EdgeInsets.fromLTRB(0, 22, 0, 0),
+                              child: Column(
+                                children: <Widget>[
+                                  Icon(Icons.account_circle, size: 70, color: Colors.white,),
+                                  SizedBox(height: 15,),
+                                  Text(
+                                    getUserName(),
+                                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 25, color: Colors.white),
+                                  ),
+                                ],
+                              )
+                          )
+                      ),
                     )
                 ),
               ),
@@ -97,17 +113,20 @@ class _MainDrawerState extends State<MainDrawer> {
                     ),
                     ListTile(
                       onTap: (){
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(builder: (context) =>LoginPage())
-                        ).then((res){
-                          Scaffold.of(context).openEndDrawer();
-                          Scaffold.of(context).showSnackBar(Snack.success(res));
-                          tableProvider.initTables();
-                        });
+                        if(profileProvider.userAuth.isLogin){
+                          Navigator.push(context, MaterialPageRoute(builder: (context) =>SettingPage()));
+                        }
+                        else{
+                          Navigator.push(context, MaterialPageRoute(builder: (context) =>LoginPage()))
+                              .then((res){
+                            Scaffold.of(context).openEndDrawer();
+                            Scaffold.of(context).showSnackBar(Snack.success(res));
+                            tableProvider.initTables();
+                          });
+                        }
                       },
-                      leading: Icon(Icons.perm_identity, color: Colors.white,),
-                      title: Text(getUserName(), style: TextStyle(color: Colors.white),),
+                      leading: Icon(Icons.settings, color: Colors.white,),
+                      title: Text("设置", style: TextStyle(color: Colors.white)),
                     ),
                   ],
                 ),

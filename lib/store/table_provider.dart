@@ -1,19 +1,23 @@
 import 'package:zucc_helper/config/global.dart';
 import 'package:zucc_helper/models/table_model.dart';
 import 'package:zucc_helper/store/base.dart';
+import 'package:zucc_helper/utils/table_date.dart';
 
 
 class TableProvider extends BaseProvder{
 
-  //初始化当前日期
+  //初始化课表相关配置
   static DateTime nowDate = DateTime.now();
+  static DateTime termStartTime = Global.profile.termStartTime;
+
+
   DateTime beginDate = nowDate.subtract(Duration(days: nowDate.weekday - 1));
 
   //topbar的当前周次
-  int weekNumber = 1;
+  int weekNumber = TableDate.getWeeksGap(termStartTime, nowDate).toInt();
 
   // 用户拥有的所有课表
-  List tables = Global.tables;
+  List tables = [];
 
   //当前显示的课表数组
   List stuClasses = [];

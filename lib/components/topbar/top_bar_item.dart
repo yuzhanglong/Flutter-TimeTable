@@ -124,8 +124,10 @@ class _RightIconButtonsState extends State<RightIconButtons> {
               Navigator.push(context,
                   MaterialPageRoute(builder: (context) =>CreateClass())
               ).then((res){
+                if(res != null){
+                  Scaffold.of(context).showSnackBar(Snack.success(res));
+                }
                 tableProvider.initTables();
-                Scaffold.of(context).showSnackBar(Snack.success(res));
               });
             },
           ),
@@ -139,12 +141,14 @@ class _RightIconButtonsState extends State<RightIconButtons> {
             color: Colors.white,
             icon: Icon(Icons.file_download, color: GlobalConfig.fontColor,),
             onPressed: (){
-              if(profileProvider.isLogin){
+              if(profileProvider.userAuth.isLogin){
                 Navigator.push(context,
                     MaterialPageRoute(builder: (context) =>ConnectionPage())
                 ).then((res){
                   tableProvider.initTables();
-                  Scaffold.of(context).showSnackBar(Snack.success(res));
+                  if(res != null){
+                    Scaffold.of(context).showSnackBar(Snack.success(res));
+                  }
                 });
               }else{
                 Scaffold.of(context).showSnackBar(Snack.error("请登录后再执行导入教务处课表功能"));
