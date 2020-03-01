@@ -114,13 +114,21 @@ class _MainDrawerState extends State<MainDrawer> {
                     ListTile(
                       onTap: (){
                         if(profileProvider.userAuth.isLogin){
-                          Navigator.push(context, MaterialPageRoute(builder: (context) =>SettingPage()));
+                          Navigator.push(context, MaterialPageRoute(builder: (context) =>SettingPage()))
+                              .then((res){
+                                Scaffold.of(context).openEndDrawer();
+                                if(res != null){
+                                  Scaffold.of(context).showSnackBar(Snack.success(res));
+                                }
+                              });
                         }
                         else{
                           Navigator.push(context, MaterialPageRoute(builder: (context) =>LoginPage()))
                               .then((res){
                             Scaffold.of(context).openEndDrawer();
-                            Scaffold.of(context).showSnackBar(Snack.success(res));
+                            if(res != null){
+                              Scaffold.of(context).showSnackBar(Snack.success(res));
+                            }
                             tableProvider.initTables();
                           });
                         }

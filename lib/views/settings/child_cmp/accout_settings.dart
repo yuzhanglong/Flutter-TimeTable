@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:zucc_helper/views/login/child_cmp/set_password.dart';
+import 'package:zucc_helper/views/settings/child_cmp/set_password.dart';
 
 
 class AccountSettings extends StatefulWidget {

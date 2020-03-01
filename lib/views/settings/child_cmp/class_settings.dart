@@ -3,6 +3,8 @@ import 'package:provider/provider.dart';
 import 'package:zucc_helper/config/global.dart';
 import 'package:zucc_helper/models/user_model.dart';
 import 'package:zucc_helper/store/profile_provider.dart';
+import 'package:zucc_helper/store/table_provider.dart';
+import 'package:zucc_helper/utils/snack_bar.dart';
 
 class ClassSettings extends StatefulWidget {
   @override
@@ -10,6 +12,8 @@ class ClassSettings extends StatefulWidget {
 }
 
 class _ClassSettingsState extends State<ClassSettings> {
+
+  GlobalKey <ScaffoldState> _scaffoldkey = GlobalKey<ScaffoldState>();
 
   String getDateTimeString(dateTime){
     return dateTime != null ? "${dateTime.year}年${dateTime.month}月${dateTime.day}日" : "未设置";
@@ -21,12 +25,15 @@ class _ClassSettingsState extends State<ClassSettings> {
   @override
   Widget build(BuildContext context) {
 
+
+    TableProvider tableProvider = Provider.of<TableProvider>(context);
     ProfileProvider profileProvider = Provider.of<ProfileProvider>(context);
+
+
     String showDateTime = getDateTimeString(Global.profile.termStartTime);
 
-
-
     return Scaffold(
+      key: _scaffoldkey,
       appBar: AppBar(
         automaticallyImplyLeading: false,
         backgroundColor: Color.fromARGB(255, 41, 47, 93),
@@ -67,6 +74,8 @@ class _ClassSettingsState extends State<ClassSettings> {
                            var p = Profile();
                            p.termStartTime = val;
                            profileProvider.setProfile(p);
+                           _scaffoldkey.currentState.showSnackBar(Snack.success("开学日期修改成功"));
+                           tableProvider.initTables();
                          }
                        });
                      },

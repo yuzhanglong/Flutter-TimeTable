@@ -142,6 +142,18 @@ class _SettingPageState extends State<SettingPage>  with TickerProviderStateMixi
                         );
                       },
                     ),
+                    ListTile(
+                      leading: Icon(Icons.exit_to_app, color: Colors.white,),
+                      title: Text("退出登录", style: TextStyle(color: Colors.white, fontSize: 18)),
+                      isThreeLine: true,
+                      subtitle: Text("你的所有记录都会被清除", style: TextStyle(
+                          color: Colors.white, fontSize: 14
+                      )),
+                      onTap: (){
+                        tableProvider.clearAllData();
+                        Navigator.of(context).pop("您已经成功退出登录");
+                      },
+                    ),
                   ],
                 )
             ),

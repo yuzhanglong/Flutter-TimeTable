@@ -25,12 +25,13 @@ class UserRequest {
   }
 
   // 鉴权
-  static Future checkAuth(token) {
+  static Future checkAuth(token, userName) {
     return HttpRequest.request(
         url: "/users/token",
         method: "post",
         data: {
           "token": token,
+          "userName": userName
         }
     );
   }

@@ -19,7 +19,7 @@ class UserAuth extends User{
   }
 
   Future checkAuth(){
-    return UserRequest.checkAuth(this.token);
+    return UserRequest.checkAuth(this.token, this.userName);
   }
 
   setAuth(){
@@ -30,6 +30,8 @@ class UserAuth extends User{
   clearAuth(){
     SharedPreferenceUtil.remove("user");
     SharedPreferenceUtil.remove("token");
+    this.userName = null;
+    this.token = null;
   }
 }
 

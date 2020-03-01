@@ -8,7 +8,7 @@ class TableProvider extends BaseProvder{
 
   //初始化课表相关配置
   static DateTime nowDate = DateTime.now();
-  static DateTime termStartTime = Global.profile.termStartTime;
+  static DateTime termStartTime = Global.profile.termStartTime != null ? Global.profile.termStartTime : DateTime.now();
 
 
   DateTime beginDate = nowDate.subtract(Duration(days: nowDate.weekday - 1));
@@ -45,6 +45,15 @@ class TableProvider extends BaseProvder{
         }
         notifyListeners();
       }).catchError((err){});
+  }
+
+  clearAllData(){
+    activeTableName = "";
+    activeTableId = "";
+    stuClasses = [];
+    tables = [];
+    Global.userAuth.clearAuth();
+    notifyListeners();
   }
 
 

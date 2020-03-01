@@ -40,7 +40,7 @@ class TableMaker{
         classTime = singleClass.beginTime;
         var pos = 8 * classTime + classWeekDay;
         allItems[pos] = ClassCard(
-          baseColor: Color.fromARGB(255, 131, 137, 184),
+          baseColor: Color.fromARGB(255, 100, 137, 184),
           className: singleClass.className,
         );
       }
