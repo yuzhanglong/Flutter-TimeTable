@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_picker/PickerLocalizationsDelegate.dart';
-import 'package:zucc_helper/app.dart';
 import 'package:zucc_helper/config/global.dart';
 import 'package:zucc_helper/config/global_config.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:zucc_helper/store/profile_provider.dart';
 import 'package:zucc_helper/store/table_provider.dart';
+import 'config/router_manager.dart';
 
 
 void main(){
@@ -34,16 +34,11 @@ class ZuccHelperApp extends StatelessWidget {
         supportedLocales: [
           const Locale('en', 'US'),
           const Locale('zh', 'CH'),
-          const Locale('ko', 'KO'),
-          const Locale('it', 'IT'),
-          const Locale('ar', 'AR'),
-          const Locale('tr','TR')
         ],
         title: "zucc-helper",
-        home: App(),
-        theme: ThemeData(
-            primaryColor: GlobalConfig.basicColor
-        ),
+        theme: ThemeData(primaryColor: GlobalConfig.basicColor),
+        onGenerateRoute: Router.generateRoute,
+        initialRoute: RouteName.home,
       ),
     );
   }
