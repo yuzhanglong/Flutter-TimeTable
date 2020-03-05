@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:zucc_helper/components/animations/scale_animation.dart';
+import 'package:zucc_helper/models/login_model.dart';
 import 'package:zucc_helper/models/response_model.dart';
-import 'package:zucc_helper/network/user_request.dart';
+import 'package:zucc_helper/network/profile_request.dart';
 import 'package:zucc_helper/store/profile_provider.dart';
 import 'package:zucc_helper/utils/snack_bar.dart';
 import 'package:provider/provider.dart';
@@ -32,9 +33,7 @@ class _LoginFormState extends State<LoginForm>  with TickerProviderStateMixin{
   AnimationController formRiseController;
   Animation<double> formRiseAnimation;
 
-  String userName;
-  String password;
-
+  Login loginForm = Login();
 
   @override
   void initState() {
@@ -55,7 +54,6 @@ class _LoginFormState extends State<LoginForm>  with TickerProviderStateMixin{
 
   @override
   Widget build(BuildContext context) {
-
     TableProvider tableProvider = Provider.of<TableProvider>(context);
     ProfileProvider profileProvider = Provider.of<ProfileProvider>(context);
 
@@ -66,29 +64,41 @@ class _LoginFormState extends State<LoginForm>  with TickerProviderStateMixin{
 
     // 注册表单
     gotoRegister(){
-      UserRequest.submitRegisterData(userName, password)
-          .then((res){
-            var respose = ResponseCondition.fromMap(res);
-            gobackToHome(respose.information);
-          })
-          .catchError((error){
-            var respose = ResponseCondition.fromMap(error);
-            Scaffold.of(context).showSnackBar(Snack.error(respose.information));
-          });
+      // 验证
+      var v = loginForm.validate(1);
+      if(v != "success"){
+        Scaffold.of(context).showSnackBar(Snack.error(v));
+        return;
+      }
+
+      Future r = profileProvider.gotoRegister(loginForm);
+      r.then((res){
+        if(res.isSuccess){
+          gobackToHome("注册成功啦~");
+        }else{
+          Scaffold.of(context).showSnackBar(Snack.error("抱歉 注册失败 请检查网络"));
+        }
+      });
     }
 
-    // 登录表单
+
     gotoLogin(){
-      UserRequest.submitLoginData(userName, password)
-          .then((res){
-            var respose = ResponseToken.fromMap(res);
-            profileProvider.setUserInfo(userName, respose.token);
-            gobackToHome(respose.information);
-          })
-          .catchError((error){
-            var respose = ResponseCondition.fromMap(error);
-            Scaffold.of(context).showSnackBar(Snack.error(respose.information));
-          });
+      // 验证
+      var v = loginForm.validate(0);
+      if(v != "success"){
+        Scaffold.of(context).showSnackBar(Snack.error(v));
+        return;
+      }
+
+
+      Future r = profileProvider.gotoLogin(loginForm);
+      r.then((res){
+        if(res.isSuccess){
+          gobackToHome(res.information);
+        }else{
+          Scaffold.of(context).showSnackBar(Snack.error(res.information));
+        }
+      });
     }
 
     return Theme(
@@ -120,7 +130,7 @@ class _LoginFormState extends State<LoginForm>  with TickerProviderStateMixin{
                         ),
                         onChanged: (value){
                           setState(() {
-                            userName = value;
+                            loginForm.userName = value;
                           });
                         },
                     ),
@@ -138,7 +148,7 @@ class _LoginFormState extends State<LoginForm>  with TickerProviderStateMixin{
                         ),
                         onChanged: (value){
                           setState(() {
-                            password = value;
+                            loginForm.password = value;
                           });
                         },
                     ),
@@ -156,7 +166,7 @@ class _LoginFormState extends State<LoginForm>  with TickerProviderStateMixin{
                       ),
                       onChanged: (value){
                         setState(() {
-                          password = value;
+                          loginForm.passwordAgain = value;
                         });
                       },
                     ),

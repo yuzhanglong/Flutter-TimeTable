@@ -1,11 +1,13 @@
 class ResponseCondition{
   String status;
   String information;
+  bool isSuccess;
 
 
-  ResponseCondition.fromMap(Map<String, dynamic> json) {
+  ResponseCondition.fromMap(Map<String, dynamic> json, {bool isSuccess}) {
     this.status = json["status"];
     this.information = json["information"];
+    if(isSuccess != null) this.isSuccess = isSuccess;
   }
 }
 

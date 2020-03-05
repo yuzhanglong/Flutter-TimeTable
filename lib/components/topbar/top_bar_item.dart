@@ -141,7 +141,7 @@ class _RightIconButtonsState extends State<RightIconButtons> {
             color: Colors.white,
             icon: Icon(Icons.file_download, color: GlobalConfig.fontColor,),
             onPressed: (){
-              if(profileProvider.userAuth.isLogin){
+              if(profileProvider.isLogin){
                 Navigator.push(context,
                     MaterialPageRoute(builder: (context) =>ConnectionPage())
                 ).then((res){

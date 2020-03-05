@@ -1,19 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_picker/PickerLocalizationsDelegate.dart';
-import 'package:zucc_helper/config/global.dart';
 import 'package:zucc_helper/config/global_config.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
+import 'package:zucc_helper/config/storage_manager.dart';
 import 'package:zucc_helper/store/profile_provider.dart';
 import 'package:zucc_helper/store/table_provider.dart';
-import 'config/router_manager.dart';
+import 'package:zucc_helper/config/router_manager.dart';
 
 
 void main(){
   WidgetsFlutterBinding.ensureInitialized();
   SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(statusBarColor: Colors.transparent));
-  Global.init().then((e) => runApp(ZuccHelperApp()));
+  StorageManager.init().then((e) => runApp(ZuccHelperApp()));
 }
 
 

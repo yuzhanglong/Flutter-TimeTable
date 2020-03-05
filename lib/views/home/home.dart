@@ -20,10 +20,6 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
   GlobalKey <ScaffoldState> _scaffoldkey = GlobalKey<ScaffoldState>();
 
 
-
-
-
-
   @override
   void initState() {
     // TODO: implement initState
@@ -32,18 +28,14 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
     //此处处理比较棘手 先用延迟应付下
     Future.delayed(Duration(milliseconds: 1000), () {
       var p = Provider.of<ProfileProvider>(context);
-      if(p.userAuth.isLogin){
-        _scaffoldkey.currentState.showSnackBar(Snack.success("欢迎您 " + p.userAuth.userName));
+      if(p.isLogin){
+        _scaffoldkey.currentState.showSnackBar(Snack.success("欢迎您 " + p.profile.userName));
       }
       else{
           _scaffoldkey.currentState.showSnackBar(Snack.error("请登录"));
       }
     });
   }
-
-
-
-
 
 
   renewHomeData(condition, TableProvider provider){

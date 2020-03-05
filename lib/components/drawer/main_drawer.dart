@@ -11,9 +11,8 @@ import 'package:zucc_helper/store/table_provider.dart';
 import 'package:zucc_helper/views/settings/settings.dart';
 
 
+// 左侧抽屉
 class MainDrawer extends StatefulWidget {
-
-
   @override
   _MainDrawerState createState() => _MainDrawerState();
 }
@@ -30,7 +29,7 @@ class _MainDrawerState extends State<MainDrawer> {
 
 
     String getUserName(){
-      return profileProvider.userAuth.userName == null ? "请登录" : profileProvider.userAuth.userName;
+      return profileProvider.profile == null ? "请登录" : profileProvider.profile.userName;
     }
 
     List<Widget> getExpansionChildren(){
@@ -69,7 +68,7 @@ class _MainDrawerState extends State<MainDrawer> {
                     ),
                     child: GestureDetector(
                       onTap: (){
-                        if(profileProvider.userAuth.isLogin){
+                        if(profileProvider.isLogin){
                           Navigator.push(context, MaterialPageRoute(builder: (context) =>SettingPage()));
                         }
                         else{
@@ -113,7 +112,7 @@ class _MainDrawerState extends State<MainDrawer> {
                     ),
                     ListTile(
                       onTap: (){
-                        if(profileProvider.userAuth.isLogin){
+                        if(profileProvider.isLogin){
                           Navigator.push(context, MaterialPageRoute(builder: (context) =>SettingPage()))
                               .then((res){
                                 Scaffold.of(context).openEndDrawer();
@@ -143,8 +142,5 @@ class _MainDrawerState extends State<MainDrawer> {
           ),
         )
     );
-
   }
-
 }
-

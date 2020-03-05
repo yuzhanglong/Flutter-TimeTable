@@ -222,12 +222,12 @@ class _CreateClassState extends State<CreateClass> with TickerProviderStateMixin
 
 
     submitdata(data){
-      TableRequest.createOneClass(profileProvider.userAuth.userName, profileProvider.userAuth.token, tableProvider.activeTableId, data)
-          .then((res){
-            // 创建成功 返回上一页
-            var r = ResponseCondition.fromMap(res);
-            gobackToHome(r.information);
-          });
+//      TableRequest.createOneClass(profileProvider.userAuth.userName, profileProvider.userAuth.token, tableProvider.activeTableId, data)
+//          .then((res){
+//            // 创建成功 返回上一页
+//            var r = ResponseCondition.fromMap(res);
+//            gobackToHome(r.information);
+//          });
 
     }
     

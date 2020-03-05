@@ -3,7 +3,7 @@ import 'package:zucc_helper/config/network_config.dart';
 import 'package:zucc_helper/models/response_model.dart';
 import 'package:zucc_helper/models/table_model.dart';
 import 'package:zucc_helper/network/requests.dart';
-import 'package:zucc_helper/network/user_request.dart';
+import 'package:zucc_helper/network/profile_request.dart';
 import 'package:zucc_helper/network/utils_request.dart';
 import 'package:zucc_helper/store/profile_provider.dart';
 import 'package:zucc_helper/store/table_provider.dart';
@@ -134,7 +134,7 @@ class _DataFormState extends State<DataForm> {
                           onPressed: (){
                             formKey.currentState.save();
                             formKey.currentState.validate();
-                            sendDataForm(userName, password, checkCode, profileProvider.userAuth.token, profileProvider.userAuth.userName);
+//                            sendDataForm(userName, password, checkCode, profileProvider.userAuth.token, profileProvider.userAuth.userName);
                           },
                           child: Text("导入课表", style: TextStyle(
                             color: Colors.white,

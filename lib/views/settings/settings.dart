@@ -1,17 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'dart:convert';
-import 'package:flutter_picker/flutter_picker.dart';
 import 'package:provider/provider.dart';
-import 'package:zucc_helper/models/response_model.dart';
-import 'package:zucc_helper/models/table_model.dart';
-import 'package:zucc_helper/network/table_request.dart';
 import 'package:zucc_helper/store/profile_provider.dart';
 import 'package:zucc_helper/store/table_provider.dart';
-import 'package:zucc_helper/utils/pick_data.dart';
-import 'package:zucc_helper/utils/snack_bar.dart';
-import 'package:zucc_helper/utils/table_date.dart';
-import 'package:zucc_helper/views/home/child_cmp/classes_map/class_time_item.dart';
 import 'package:zucc_helper/views/settings/child_cmp/about.dart';
 import 'package:zucc_helper/views/settings/child_cmp/accout_settings.dart';
 import 'package:zucc_helper/views/settings/child_cmp/class_settings.dart';
@@ -150,7 +141,6 @@ class _SettingPageState extends State<SettingPage>  with TickerProviderStateMixi
                           color: Colors.white, fontSize: 14
                       )),
                       onTap: (){
-                        tableProvider.clearAllData();
                         Navigator.of(context).pop("您已经成功退出登录");
                       },
                     ),
