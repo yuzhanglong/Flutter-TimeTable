@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:zucc_helper/models/profile_model.dart';
 import 'package:zucc_helper/network/requests.dart';
 
 class ProfileRequst {
@@ -43,6 +44,25 @@ class ProfileRequst {
     return HttpRequest.request(
         url: "/users/get_profile",
         method: "get",
+        headers: {
+          "Authorization": 'Basic ' + base64Encode(utf8.encode('$token:'))
+        }
+    );
+  }
+
+  // 更新个人信息
+  static Future resetProfileInfo(Profile profile, token) {
+    var t = profile.toDateTimeJson();
+    return HttpRequest.request(
+        url: "/users/reset_profile",
+        method: "post",
+        data: {
+          "userName":  profile.userName,
+          //  "password": profile.password
+          "termStartYear": t['termStartYear'],
+          "termStartMonth": t['termStartMonth'],
+          "termStartDay": t['termStartDay']
+        },
         headers: {
           "Authorization": 'Basic ' + base64Encode(utf8.encode('$token:'))
         }

@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:zucc_helper/models/profile_model.dart';
 import 'package:zucc_helper/store/profile_provider.dart';
 import 'package:zucc_helper/store/table_provider.dart';
+import 'package:zucc_helper/utils/snack_bar.dart';
 
 class ClassSettings extends StatefulWidget {
   @override
@@ -68,11 +70,11 @@ class _ClassSettingsState extends State<ClassSettings> {
                            lastDate: DateTime.now(),
                        ).then((DateTime val) {
                          if(val != null){
-//                           var p = Profile();
-//                           p.termStartTime = val;
-//                           profileProvider.setProfile(p);
-//                           _scaffoldkey.currentState.showSnackBar(Snack.success("开学日期修改成功"));
-//                           tableProvider.initTables();
+                           var p = Profile();
+                           p.termStartTime = val;
+                           profileProvider.resetProfileInfo(p);
+                           _scaffoldkey.currentState.showSnackBar(Snack.success("开学日期修改成功"));
+                           tableProvider.initTables();
                          }
                        });
                      },

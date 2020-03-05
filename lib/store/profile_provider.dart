@@ -26,15 +26,14 @@ class ProfileProvider extends ChangeNotifier{
   gotoLogin(Login loginForm) async {
     var res = await ProfileRequst.submitLoginData(loginForm.userName, loginForm.password)
         .then((res){
+          print(res);
           var p = Profile.fromJsonMap(res);
+          print(p.token);
           saveProfileInfo(p);
-
           var response = ResponseCondition.fromMap(res, isSuccess: true);
           return response;
-
         })
         .catchError((error){
-          print(error);
           var response = ResponseCondition.fromMap(error, isSuccess: false);
           return response;
         });
@@ -62,6 +61,7 @@ class ProfileProvider extends ChangeNotifier{
     ProfileRequst.getProfileInfo(_profile.token)
         .then((res){
           var p = Profile.fromJsonMap(res);
+
           saveProfileInfo(p);
         }).catchError((error){
 
@@ -69,10 +69,20 @@ class ProfileProvider extends ChangeNotifier{
   }
 
 
+  // 修改个人信息
+  resetProfileInfo(Profile profile){
+    ProfileRequst.resetProfileInfo(profile, _profile.token)
+        .then((res){
+          var p = Profile.fromJsonMap(res);
+          p.token = _profile.token;
+          saveProfileInfo(p);
+        });
+  }
+
+
   // 保存用户信息
   saveProfileInfo(Profile profile){
     _profile = profile;
-    print(_profile.userName);
     _profile.setProfile();
     // 通知其他组件更新
     notifyListeners();

@@ -14,10 +14,18 @@ class Profile {
   // 学期开始时间
   DateTime termStartTime;
 
+  Profile(){
+    this.userName = null;
+    this.token = null;
+    this.termStartTime = null;
+  }
+
 
   Profile.fromJsonMap(Map<String, dynamic> map) {
     userName = map["userName"];
-    token = map["token"];
+    if(map["token"] != null){
+      token = map["token"];
+    }
     if(map['termStartTime'] != null){
       termStartTime = fromDateTimeJson(map['termStartTime']);
     }
@@ -49,6 +57,7 @@ class Profile {
     return time;
   }
 
+
   void setProfile() {
     // 持久化存储
     StorageManager.sharedPreferences.setString("profile", jsonEncode(this.toJson()));
@@ -57,5 +66,12 @@ class Profile {
   void clearProfile(){
     // 持久化存储
     StorageManager.sharedPreferences.remove("profile");
+  }
+
+
+  @override
+  String toString() {
+    // TODO: implement toString
+    return "$userName $token";
   }
 }
