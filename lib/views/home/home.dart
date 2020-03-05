@@ -84,7 +84,7 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
         },
         child: Column(
           children: <Widget>[
-            DayBarView(beginDay: tableProvider.beginDate,),
+            DayBarView(beginDay: tableProvider.beginDate),
             HomeClassView(stuClasses: tableProvider.stuClasses)
           ],
         ),

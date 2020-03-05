@@ -11,18 +11,22 @@ import 'package:zucc_helper/config/network_config.dart';
 class HttpRequest {
   // 设置基本信息
   static BaseOptions baseOptions = BaseOptions(
-      baseUrl: BASE_URL,
-      connectTimeout: TIME_OUT,
+    baseUrl: BASE_URL,
+    connectTimeout: TIME_OUT,
   );
 
   static Future request({
     @required String url,
     @required String method,
     Map<String, dynamic> params,
+    headers,
     data
   }) async {
+
     // 创建一个dio实例
+    if(headers != null) baseOptions.headers = headers;
     final dio = Dio(baseOptions);
+
 
     // 发送网络请求
     Options options = Options(method: method);

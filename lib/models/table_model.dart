@@ -1,12 +1,29 @@
-class StuTable{
+/*
+*  课程表模型
+*
+* */
+
+class StuTable {
+  // 课程表名称
   String tableName;
+  // 课程表id
   String tableId;
+  // 所有课程
+  List classes;
+
 
 
 
   StuTable.fromMap(Map<String, dynamic> json) {
     this.tableId = json['tableId'];
     this.tableName = json['tableName'];
+    this.classes = json['classes'];
+  }
+
+  @override
+  String toString() {
+    // TODO: implement toString
+    return "$tableId $tableName $classes";
   }
 }
 

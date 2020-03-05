@@ -1,9 +1,19 @@
+import 'dart:convert';
+
 import 'package:flutter/cupertino.dart';
+import 'package:zucc_helper/config/storage_manager.dart';
 import 'package:zucc_helper/models/table_model.dart';
+import 'package:zucc_helper/network/table_request.dart';
+import 'package:zucc_helper/store/profile_provider.dart';
 import 'package:zucc_helper/utils/table_date.dart';
 
 
-class TableProvider extends ChangeNotifier{
+/*
+*  课程表相关
+*
+* */
+
+class TableProvider extends ProfileProvider{
 
   //初始化课表相关配置
   static DateTime nowDate = DateTime.now();
@@ -15,35 +25,56 @@ class TableProvider extends ChangeNotifier{
   //topbar的当前周次
   int weekNumber = TableDate.getWeeksGap(nowDate, nowDate).toInt();
 
-  // 用户拥有的所有课表
-  List tables = [];
+  // 用户拥有的所有课表 包涵所有信息
+  List _tables = [];
+
+  List get tables => _tables;
+
 
   //当前显示的课表数组
-  List stuClasses = [];
+  StuTable currentTable;
+
+  List get stuClasses => currentTable != null ? currentTable.classes : [];
+
+
 
   //当前活跃的课表名称
   String activeTableName = "";
 
   String activeTableId = "";
 
-  //构造函数
+
   TableProvider(){
-    initTables();
+    // 拿到学生的所有课表
+    var raw = StorageManager.sharedPreferences.getStringList("tables");
+    
+    if(raw == null && profile != null){
+      // 联网请求用户课表数据
+      TableRequest.getUserTables(profile.token)
+          .then((res){
+            _tables = res['tables'];
+            currentTable = StuTable.fromMap(_tables[0]);
+          });
+
+
+    }else if(raw != null){
+      pushTablesToList(raw);
+    }
+    notifyListeners();
+  }
+
+
+  void pushTablesToList(List raw){
+    for(int i = 0; i < raw.length; i++){
+      _tables.add(StuTable.fromMap(jsonDecode(raw[i])));
+    }
+    notifyListeners();
   }
 
 
   //用户所拥有的课程表的初始化
-  void initTables() async {
-//      Global.initHomeTable().then((res){
-//        tables = res['tables'];
-//        if(res['tables'].length != 0){
-//          stuClasses = res['tables'][0]['classes'];
-//          var t = StuTable.fromMap(res['tables'][0]);
-//          activeTableName = t.tableName;
-//          activeTableId = t.tableId;
-//        }
-//        notifyListeners();
-//      }).catchError((err){});
+  void getTablesFromWeb() async {
+
   }
 
 //  clearAllData(){
@@ -79,7 +110,7 @@ class TableProvider extends ChangeNotifier{
   // 改变home页展示的课程(用户切换了课程表)
   changeHomeClasses(index){
     print(index);
-    stuClasses = tables[index]['classes'];
+//    stuClasses = tables[index]['classes'];
     activeTableName = tables[index]['tableName'];
     notifyListeners();
   }

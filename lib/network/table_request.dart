@@ -1,16 +1,17 @@
+import 'dart:convert';
+
 import 'package:zucc_helper/network/requests.dart';
 
 
 class TableRequest{
 
-  static Future getUserTables(userName, token) {
+  static Future getUserTables(token) {
     return HttpRequest.request(
-        url: "/utils/get_user_tables",
-        method: "post",
-        data: {
-          "userName": userName,
-          "token": token,
-        }
+      url: "/tables/get_user_tables",
+      method: "get",
+      headers: {
+        "Authorization": 'Basic ' + base64Encode(utf8.encode('$token:'))
+      }
     );
   }
 

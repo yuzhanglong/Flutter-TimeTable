@@ -127,7 +127,7 @@ class _RightIconButtonsState extends State<RightIconButtons> {
                 if(res != null){
                   Scaffold.of(context).showSnackBar(Snack.success(res));
                 }
-                tableProvider.initTables();
+//                tableProvider.initTables();
               });
             },
           ),
@@ -145,7 +145,7 @@ class _RightIconButtonsState extends State<RightIconButtons> {
                 Navigator.push(context,
                     MaterialPageRoute(builder: (context) =>ConnectionPage())
                 ).then((res){
-                  tableProvider.initTables();
+//                  tableProvider.initTables();
                   if(res != null){
                     Scaffold.of(context).showSnackBar(Snack.success(res));
                   }
