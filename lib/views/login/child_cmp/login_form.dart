@@ -76,7 +76,7 @@ class _LoginFormState extends State<LoginForm>  with TickerProviderStateMixin{
         if(res.isSuccess){
           gobackToHome("注册成功啦~");
         }else{
-          Scaffold.of(context).showSnackBar(Snack.error("抱歉 注册失败 请检查网络"));
+          Scaffold.of(context).showSnackBar(Snack.error("抱歉 注册失败"));
         }
       });
     }
@@ -95,6 +95,7 @@ class _LoginFormState extends State<LoginForm>  with TickerProviderStateMixin{
       r.then((res){
         if(res.isSuccess){
           gobackToHome(res.information);
+          profileProvider.getProfile();
         }else{
           Scaffold.of(context).showSnackBar(Snack.error(res.information));
         }

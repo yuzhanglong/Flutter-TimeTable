@@ -28,14 +28,18 @@ class ProfileProvider extends ChangeNotifier{
         .then((res){
           var p = Profile.fromJsonMap(res);
           saveProfileInfo(p);
+
           var response = ResponseCondition.fromMap(res, isSuccess: true);
           return response;
+
         })
         .catchError((error){
+          print(error);
           var response = ResponseCondition.fromMap(error, isSuccess: false);
           return response;
         });
-        return res;
+    notifyListeners();
+    return res;
   }
 
   // 用户注册
@@ -50,6 +54,18 @@ class ProfileProvider extends ChangeNotifier{
           return response;
         });
     return res;
+  }
+
+
+  // 更新个人信息
+  getProfile() async {
+    ProfileRequst.getProfileInfo(_profile.token)
+        .then((res){
+          var p = Profile.fromJsonMap(res);
+          saveProfileInfo(p);
+        }).catchError((error){
+
+        });
   }
 
 

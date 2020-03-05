@@ -39,25 +39,26 @@ class TableProvider extends ProfileProvider{
 
 
   //当前活跃的课表名称
-  String activeTableName = "";
+  String get activeTableName => currentTable != null ? currentTable.tableName : "";
 
-  String activeTableId = "";
+  String get activeTableId => currentTable != null ? currentTable.tableId : "";
 
 
   TableProvider(){
     // 拿到学生的所有课表
     var raw = StorageManager.sharedPreferences.getStringList("tables");
-    
     if(raw == null && profile != null){
       // 联网请求用户课表数据
       TableRequest.getUserTables(profile.token)
           .then((res){
             _tables = res['tables'];
             currentTable = StuTable.fromMap(_tables[0]);
+          })
+          .catchError((res){
+            clearProfile();
           });
-
-
     }else if(raw != null){
+
       pushTablesToList(raw);
     }
     notifyListeners();
@@ -70,23 +71,6 @@ class TableProvider extends ProfileProvider{
     }
     notifyListeners();
   }
-
-
-  //用户所拥有的课程表的初始化
-  void getTablesFromWeb() async {
-
-  }
-
-//  clearAllData(){
-//    activeTableName = "";
-//    activeTableId = "";
-//    stuClasses = [];
-//    tables = [];
-//    Global.userAuth.clearAuth();
-//    notifyListeners();
-//  }
-
-
 
   //屏幕左划
   addOneWeek(){
@@ -109,9 +93,7 @@ class TableProvider extends ProfileProvider{
 
   // 改变home页展示的课程(用户切换了课程表)
   changeHomeClasses(index){
-    print(index);
-//    stuClasses = tables[index]['classes'];
-    activeTableName = tables[index]['tableName'];
+    currentTable = StuTable.fromMap(_tables[index]);
     notifyListeners();
   }
 }

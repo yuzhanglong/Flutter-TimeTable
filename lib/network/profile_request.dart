@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:zucc_helper/network/requests.dart';
 
 class ProfileRequst {
@@ -36,6 +38,16 @@ class ProfileRequst {
     );
   }
 
+  // 获取个人信息
+  static Future getProfileInfo(token) {
+    return HttpRequest.request(
+        url: "/users/get_profile",
+        method: "get",
+        headers: {
+          "Authorization": 'Basic ' + base64Encode(utf8.encode('$token:'))
+        }
+    );
+  }
 }
 
 
