@@ -3,6 +3,8 @@
 *
 * */
 
+import 'package:flutter/material.dart';
+
 class StuTable {
   // 课程表名称
   String tableName;
@@ -51,6 +53,9 @@ class StuClass{
   //课程名称
   String className;
 
+  // 课程卡片颜色
+  Color baseColor;
+
   StuClass({
     this.beginTime,
     this.endTime,
@@ -60,7 +65,8 @@ class StuClass{
     this.weekDuringEnd,
     this.isGapWeek,
     this.weekDuringStart,
-    this.weekDay
+    this.weekDay,
+    this.baseColor
   });
 
 
@@ -74,6 +80,7 @@ class StuClass{
     this.weekDuringStart = json['weekDuringStart'];
     this.weekDuringEnd = json['weekDuringEnd'];
     this.isGapWeek = json['isGapWeek'];
+    this.baseColor = Color.fromARGB(255, 100, 137, 184);
   }
 
   validate(){

@@ -34,14 +34,15 @@ class TableMaker{
       int classWeekDay;
       int classTime;
       int classTime2;
+
       //只有一节课的情况
       if(singleClass.beginTime == singleClass.endTime){
         classWeekDay = singleClass.weekDay;
         classTime = singleClass.beginTime;
         var pos = 8 * classTime + classWeekDay;
         allItems[pos] = ClassCard(
-          baseColor: Color.fromARGB(255, 100, 137, 184),
-          className: singleClass.className,
+          stuClass: singleClass,
+          // baseColor: Color.fromARGB(255, 100, 137, 184),
         );
       }
       //多节课程连续
@@ -51,8 +52,8 @@ class TableMaker{
         classTime2 = singleClass.endTime;
         for(int t = classTime; t <= classTime2; t++){
           allItems[8 * t + classWeekDay] = ClassCard(
-              baseColor: Color.fromARGB(255, 100, 137, 184),
-              className: singleClass.className
+            stuClass: singleClass,
+            // baseColor: Color.fromARGB(255, 100, 137, 184),
           );
         }
       }

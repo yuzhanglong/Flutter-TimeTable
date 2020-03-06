@@ -1,24 +1,25 @@
 import 'package:flutter/material.dart';
+import 'package:zucc_helper/models/table_model.dart';
+
+import 'bottom_show.dart';
 
 
 
 //课程卡片
 
 class ClassCard extends StatefulWidget {
-  //课程名称
-  final String className;
 
-  //底色
-  final Color baseColor;
+  final StuClass stuClass;
 
-  //卡片类型  默认为0   1代表下方无圆角  2代表下方无圆角  3代表中间 用于连续的课程处理
+
   final int cardType;
 
+
   ClassCard({
-    this.className = "",
-    this.baseColor = Colors.white,
+    this.stuClass,
     this.cardType = 0
   });
+
 
 
   @override
@@ -105,28 +106,45 @@ class _ClassCardState extends State<ClassCard> with TickerProviderStateMixin{
   Widget build(BuildContext context) {
     return ScaleTransition(
       scale: cardAnimation,
-      child: Container(
-        decoration: BoxDecoration(
-          color: widget.baseColor,
-          //圆角幅度
-          borderRadius: getBorderRadius(widget.cardType),
-          border: Border.all(width:3, color: Colors.transparent),
-        ),
-        child: Column(
-          children: <Widget>[
-            Text(
-              widget.className,
-              overflow: TextOverflow.ellipsis,
-              softWrap: true,
-              maxLines: 3,
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                  fontSize: 12,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.white,
+      child: GestureDetector(
+        onTap: (){
+          if(widget.stuClass != null){
+            showModalBottomSheet(
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadiusDirectional.circular(20)
+                ), //加圆角
+                context: context,
+                builder: (_){
+                  return BottomShow(
+                    stuClass: widget.stuClass,
+                  );
+                }
+            );
+          }
+        },
+        child: Container(
+          decoration: BoxDecoration(
+            color: widget.stuClass != null ? widget.stuClass.baseColor: Colors.white,
+            //圆角幅度
+            borderRadius: getBorderRadius(widget.cardType),
+            border: Border.all(width:3, color: Colors.transparent),
+          ),
+          child: Column(
+            children: <Widget>[
+              Text(
+                widget.stuClass != null ? widget.stuClass.className : "",
+                overflow: TextOverflow.ellipsis,
+                softWrap: true,
+                maxLines: 3,
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                    fontSize: 12,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.white,
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

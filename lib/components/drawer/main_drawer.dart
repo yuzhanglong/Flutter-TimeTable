@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:zucc_helper/components/drawer/child_cmp/better_drawer.dart';
-import 'package:zucc_helper/components/expansion/better_expansion.dart';
+import 'package:zucc_helper/components/mini_widgets/better_expansion.dart';
 import 'package:zucc_helper/models/table_model.dart';
 import 'package:zucc_helper/store/profile_provider.dart';
 import 'package:zucc_helper/utils/snack_bar.dart';
