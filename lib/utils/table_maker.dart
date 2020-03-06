@@ -27,7 +27,7 @@ class TableMaker{
 
   getClassTables(stuClasses, weekNumber){
     for(int k = 0; k < stuClasses.length; k++){
-      var singleClass = StuClass.fromMap(stuClasses[k]);
+      var singleClass = stuClasses[k];
       var w = weekNumber;
 
       if(!checkSpecialCondition(w, singleClass)) continue;

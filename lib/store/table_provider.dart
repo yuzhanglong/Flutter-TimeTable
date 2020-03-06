@@ -31,7 +31,7 @@ class TableProvider extends ProfileProvider{
   //当前显示的课表
   StuTable currentTable;
 
-  List get stuClasses => currentTable != null ? currentTable.classes : [];
+  List <StuClass> get stuClasses => currentTable != null ? currentTable.classes : [];
 
 
 
@@ -74,8 +74,11 @@ class TableProvider extends ProfileProvider{
     // 联网请求用户课表数据
     TableRequest.getUserTables(token)
         .then((res){
-          saveTableInfo(res['tables']);
+          print(res);
+          _tables = res['tables'];
           currentTable = StuTable.fromMap(_tables[0]);
+          notifyListeners();
+//          saveTableInfo(res['tables']);
         })
         .catchError((res){
           print(res);
@@ -148,6 +151,7 @@ class TableProvider extends ProfileProvider{
   saveTableInfo(List tables){
     List <String> temp = [];
     _tables = tables;
+    currentTable = StuTable.fromMap(_tables[0]);
     for(int i = 0; i < tables.length; i++){
       var p = StuTable.fromMap(tables[i]);
       temp.add(jsonEncode(p.toJson()));

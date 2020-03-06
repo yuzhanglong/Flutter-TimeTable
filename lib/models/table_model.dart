@@ -2,9 +2,6 @@
 *  课程表模型
 *
 * */
-
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
 
 class StuTable {
@@ -13,15 +10,19 @@ class StuTable {
   // 课程表id
   String tableId;
   // 所有课程
-  List classes;
-
+  List<StuClass> classes;
 
 
 
   StuTable.fromMap(Map<String, dynamic> json) {
-    this.tableId = json['tableId'];
-    this.tableName = json['tableName'];
-    this.classes = json['classes'];
+    if (json['classes'] != null) {
+      classes = List<StuClass>();
+      json['classes'].forEach((v) {
+        classes.add(StuClass.fromMap(v));
+      });
+    }
+    tableId = json['tableId'];
+    tableName = json['tableName'];
   }
 
   @override
@@ -30,17 +31,15 @@ class StuTable {
     return "$tableId $tableName $classes";
   }
 
-  toJson(){
-    List <String> temp = [];
-    for(int i = 0; i < classes.length; i++){
-      var p = StuClass.fromMap(classes[i]);
-      temp.add(jsonEncode(p.toJson()));
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    if (this.classes != null) {
+      data['classes'] = this.classes.map((v) => v.toJson()).toList();
     }
-    return {
-      "tableName": this.tableName,
-      "tableId":this.tableId,
-      "classes": temp
-    };
+    data['tableId'] = this.tableId;
+    data['tableName'] = this.tableName;
+    return data;
   }
 
 }
@@ -124,18 +123,18 @@ class StuClass{
         " ${this.isGapWeek}, ${this.weekDay}";
   }
 
-  toJson(){
-    return {
-      'className': this.className,
-      'beginTime': this.beginTime,
-      'endTime': this.endTime,
-      'teacher': this.teacher,
-      'place': this.place,
-      'weekDay': this.weekDay,
-      'weekDuringStart': this.weekDuringStart,
-      'weekDuringEnd': this.weekDuringEnd,
-      'isGapWeek': this.isGapWeek
-    };
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['beginTime'] = this.beginTime;
+    data['className'] = this.className;
+    data['endTime'] = this.endTime;
+    data['isGapWeek'] = this.isGapWeek;
+    data['place'] = this.place;
+    data['teacher'] = this.teacher;
+    data['weekDay'] = this.weekDay;
+    data['weekDuringEnd'] = this.weekDuringEnd;
+    data['weekDuringStart'] = this.weekDuringStart;
+    return data;
   }
 
 }

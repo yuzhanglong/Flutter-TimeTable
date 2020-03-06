@@ -3,11 +3,12 @@ import 'package:provider/provider.dart';
 import 'package:zucc_helper/config/global_config.dart';
 import 'package:zucc_helper/config/school_data.dart';
 import 'package:zucc_helper/models/school_model.dart';
+import 'package:zucc_helper/models/table_model.dart';
 import 'package:zucc_helper/store/table_provider.dart';
 import 'package:zucc_helper/utils/table_maker.dart';
 
 class HomeClassView extends StatefulWidget {
-  final List stuClasses;
+  final List<StuClass> stuClasses;
 
   HomeClassView({
     this.stuClasses
