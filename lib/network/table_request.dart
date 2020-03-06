@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:zucc_helper/models/table_model.dart';
 import 'package:zucc_helper/network/requests.dart';
 
 
@@ -16,15 +17,25 @@ class TableRequest{
   }
 
   // 创建一节课
-  static Future createOneClass(userName, token, tableId, classData) {
+  static Future createOneClass(StuClass stuClass, token, tableId) {
+    print(stuClass.beginTime);
     return HttpRequest.request(
-        url: "/utils/create_one_class",
+        url: "/tables/create_one_class",
         method: "post",
         data: {
-          "userName": userName,
-          "token": token,
-          "classData": classData,
-          "tableId": tableId,
+          "className": stuClass.className,
+          "beginTime": stuClass.beginTime,
+          "endTime": stuClass.endTime,
+          "teacher": stuClass.teacher,
+          "place": stuClass.place,
+          "weekDay": stuClass.weekDay,
+          "weekDuringStart": stuClass.weekDuringStart,
+          "weekDuringEnd": stuClass.weekDuringEnd,
+          "isGapWeek": stuClass.isGapWeek,
+          "tableId": tableId
+        },
+        headers: {
+          "Authorization": 'Basic ' + base64Encode(utf8.encode('$token:'))
         }
     );
   }

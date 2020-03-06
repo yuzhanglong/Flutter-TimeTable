@@ -24,7 +24,7 @@ class _CreateClassState extends State<CreateClass> with TickerProviderStateMixin
   Animation<double> animation;
 
 
-
+  var singleClass = StuClass();
 
   List <Widget> makeClassCard(){
     return [
@@ -194,7 +194,6 @@ class _CreateClassState extends State<CreateClass> with TickerProviderStateMixin
       )
     ];
   }
-  var singleClass = StuClass();
 
 
   @override
@@ -221,24 +220,22 @@ class _CreateClassState extends State<CreateClass> with TickerProviderStateMixin
     }
 
 
-    submitdata(data){
-//      TableRequest.createOneClass(profileProvider.userAuth.userName, profileProvider.userAuth.token, tableProvider.activeTableId, data)
-//          .then((res){
-//            // 创建成功 返回上一页
-//            var r = ResponseCondition.fromMap(res);
-//            gobackToHome(r.information);
-//          });
-
-    }
-    
-
     return Scaffold(
       key: _scaffoldkey,
       floatingActionButton: FloatingActionButton(
         onPressed: (){
-          var p = singleClass.checkIsLegal();
+          var p = singleClass.validate();
           if(p == "pass"){
-            submitdata(singleClass.toJson());
+            Future r = tableProvider.createOneClass(singleClass);
+            r.then((res){
+              if(res){
+                gobackToHome("添加课表成功O(∩_∩)O");
+                // 通知其更新首页课表
+                tableProvider.getRemoteTables();
+              }else{
+                _scaffoldkey.currentState.showSnackBar(Snack.error("未知错误"));
+              }
+            });
           }else{
             _scaffoldkey.currentState.showSnackBar(Snack.error(p));
           }

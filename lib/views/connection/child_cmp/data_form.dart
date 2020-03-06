@@ -34,23 +34,22 @@ class _DataFormState extends State<DataForm> {
   @override
   Widget build(BuildContext context) {
 
-    ProfileProvider profileProvider = Provider.of<ProfileProvider>(context);
+    TableProvider tableProvider = Provider.of<TableProvider>(context);
 
     gobackToHome(info){
       Navigator.of(context).pop(info);
     }
 
 
-    sendDataForm(userName, password, code, token, owner){
-      UtilsRequest.getDataFromEducationSystem(userName, password, code, token, owner)
-          .then((res){
-            var respose = ResponseCondition.fromMap(res);
-            gobackToHome(respose.information);
-          })
-          .catchError((error){
-            var respose = ResponseCondition.fromMap(error);
-            Scaffold.of(context).showSnackBar(Snack.error(respose.information));
-          });
+    sendDataForm(){
+      Future f = tableProvider.getEduSystemData(userName, password, checkCode);
+      f.then((res){
+        if(res == "s"){
+          gobackToHome("课表获取成功~");
+        }else{
+          Scaffold.of(context).showSnackBar(Snack.error(res));
+        }
+      });
     }
 
 
@@ -133,8 +132,9 @@ class _DataFormState extends State<DataForm> {
                           color: Colors.green,
                           onPressed: (){
                             formKey.currentState.save();
-                            formKey.currentState.validate();
-//                            sendDataForm(userName, password, checkCode, profileProvider.userAuth.token, profileProvider.userAuth.userName);
+                            if(formKey.currentState.validate()){
+                              sendDataForm();
+                            }
                           },
                           child: Text("导入课表", style: TextStyle(
                             color: Colors.white,

@@ -37,7 +37,6 @@ class ProfileProvider extends ChangeNotifier{
           var response = ResponseCondition.fromMap(error, isSuccess: false);
           return response;
         });
-    notifyListeners();
     return res;
   }
 

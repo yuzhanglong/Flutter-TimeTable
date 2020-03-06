@@ -141,6 +141,8 @@ class _SettingPageState extends State<SettingPage>  with TickerProviderStateMixi
                           color: Colors.white, fontSize: 14
                       )),
                       onTap: (){
+                        profileProvider.clearProfile();
+                        tableProvider.clearTables();
                         Navigator.of(context).pop("您已经成功退出登录");
                       },
                     ),

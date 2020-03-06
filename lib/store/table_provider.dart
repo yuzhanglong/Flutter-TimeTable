@@ -1,9 +1,8 @@
 import 'dart:convert';
-
-import 'package:flutter/cupertino.dart';
 import 'package:zucc_helper/config/storage_manager.dart';
 import 'package:zucc_helper/models/table_model.dart';
 import 'package:zucc_helper/network/table_request.dart';
+import 'package:zucc_helper/network/utils_request.dart';
 import 'package:zucc_helper/store/profile_provider.dart';
 import 'package:zucc_helper/utils/table_date.dart';
 
@@ -17,13 +16,11 @@ class TableProvider extends ProfileProvider{
 
   //初始化课表相关配置
   static DateTime nowDate = DateTime.now();
-//  static DateTime termStartTime = Global.profile.termStartTime != null ? Global.profile.termStartTime : DateTime.now();
-
 
   DateTime beginDate = nowDate.subtract(Duration(days: nowDate.weekday - 1));
 
   //topbar的当前周次
-  int weekNumber = TableDate.getWeeksGap(nowDate, nowDate).toInt();
+  int weekNumber = 1;
 
   // 用户拥有的所有课表 包涵所有信息
   List _tables = [];
@@ -45,7 +42,13 @@ class TableProvider extends ProfileProvider{
 
 
   TableProvider(){
+    initTimes();
     initTables();
+  }
+
+  initTimes(){
+    DateTime termStartTime = profile != null ? profile.termStartTime : DateTime.now();
+    weekNumber = TableDate.getWeeksGap(termStartTime, nowDate).toInt();
   }
 
   initTables(){
@@ -102,5 +105,35 @@ class TableProvider extends ProfileProvider{
   changeHomeClasses(index){
     currentTable = StuTable.fromMap(_tables[index]);
     notifyListeners();
+  }
+
+  clearTables(){
+    _tables = [];
+    weekNumber = 1;
+    currentTable = null;
+    notifyListeners();
+  }
+
+
+  createOneClass(StuClass stuclass) async {
+    var res = await TableRequest.createOneClass(stuclass, profile.token, activeTableId)
+        .then((res){
+          return true;
+        }).catchError((res){
+          print(res);
+          return false;
+        });
+    return res;
+  }
+
+  getEduSystemData(userName, password, code) async {
+    var res = await UtilsRequest.getDataFromEducationSystem(userName, password, code, profile.token)
+        .then((res){
+          return "s";
+        })
+        .catchError((res){
+          return res['information'];
+        });
+    return res;
   }
 }

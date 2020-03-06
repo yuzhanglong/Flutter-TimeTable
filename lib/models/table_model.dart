@@ -52,7 +52,7 @@ class StuClass{
   String className;
 
   StuClass({
-  this.beginTime,
+    this.beginTime,
     this.endTime,
     this.teacher,
     this.place,
@@ -76,7 +76,7 @@ class StuClass{
     this.isGapWeek = json['isGapWeek'];
   }
 
-  checkIsLegal(){
+  validate(){
     if(this.className == null || this.className == "") return "请填写课程名称";
     if(this.weekDay == null) return "请选择星期";
     if(this.beginTime == null) return "请填写起止时间";

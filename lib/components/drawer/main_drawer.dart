@@ -39,7 +39,7 @@ class _MainDrawerState extends State<MainDrawer> {
         var singleTable = StuTable.fromMap(t[i]);
         tmp.add(
           ListTile(
-            title: Text(singleTable.tableName, style: TextStyle(color: Colors.white70),),
+            title: Text(singleTable.tableName, style: TextStyle(color: Colors.white70)),
             onTap: (){
               tableProvider.changeHomeClasses(i);
               //抽屉关闭

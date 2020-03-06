@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:zucc_helper/config/network_config.dart';
 import 'package:zucc_helper/views/connection/child_cmp/data_form.dart';
 // 连接教务系统的界面
 
