@@ -26,9 +26,7 @@ class ProfileProvider extends ChangeNotifier{
   gotoLogin(Login loginForm) async {
     var res = await ProfileRequst.submitLoginData(loginForm.userName, loginForm.password)
         .then((res){
-          print(res);
           var p = Profile.fromJsonMap(res);
-          print(p.token);
           saveProfileInfo(p);
           var response = ResponseCondition.fromMap(res, isSuccess: true);
           return response;
@@ -73,7 +71,6 @@ class ProfileProvider extends ChangeNotifier{
     var p = await ProfileRequst.resetProfileInfo(profile, _profile.token)
         .then((res){
           var p = Profile.fromJsonMap(res);
-          print(p.termStartTime);
           p.token = _profile.token;
           saveProfileInfo(p);
           return true;

@@ -3,6 +3,8 @@
 *
 * */
 
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 
 class StuTable {
@@ -27,6 +29,20 @@ class StuTable {
     // TODO: implement toString
     return "$tableId $tableName $classes";
   }
+
+  toJson(){
+    List <String> temp = [];
+    for(int i = 0; i < classes.length; i++){
+      var p = StuClass.fromMap(classes[i]);
+      temp.add(jsonEncode(p.toJson()));
+    }
+    return {
+      "tableName": this.tableName,
+      "tableId":this.tableId,
+      "classes": temp
+    };
+  }
+
 }
 
 
@@ -121,4 +137,5 @@ class StuClass{
       'isGapWeek': this.isGapWeek
     };
   }
+
 }

@@ -46,7 +46,6 @@ class _AboutState extends State<About> {
         FlatButton(
           child: Text('我知道了'),
           onPressed: (){
-            print('yes...');
             Navigator.of(context).pop();
           },
         ),

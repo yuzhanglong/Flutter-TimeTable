@@ -76,7 +76,7 @@ class _MainDrawerState extends State<MainDrawer> {
                               .then((res){
                             Scaffold.of(context).openEndDrawer();
                             Scaffold.of(context).showSnackBar(Snack.success(res));
-                            tableProvider.getRemoteTables();
+                            tableProvider.getRemoteTables(profileProvider.profile.token);
                           });
                         }
                       },
@@ -128,7 +128,7 @@ class _MainDrawerState extends State<MainDrawer> {
                             if(res != null){
                               Scaffold.of(context).showSnackBar(Snack.success(res));
                             }
-                            tableProvider.getRemoteTables();
+                            tableProvider.getRemoteTables(profileProvider.profile.token);
                           });
                         }
                       },

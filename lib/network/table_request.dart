@@ -18,7 +18,6 @@ class TableRequest{
 
   // 创建一节课
   static Future createOneClass(StuClass stuClass, token, tableId) {
-    print(stuClass.beginTime);
     return HttpRequest.request(
         url: "/tables/create_one_class",
         method: "post",

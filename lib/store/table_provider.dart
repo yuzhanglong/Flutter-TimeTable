@@ -60,26 +60,25 @@ class TableProvider extends ProfileProvider{
   }
 
   initTables(){
-    var raw = StorageManager.sharedPreferences.getStringList("tables");
+    // 本地课表
+    var raw;
     if(raw == null && profile != null){
-      getRemoteTables();
+      getRemoteTables(profile.token);
     }else if(raw != null){
-      getLocalTables(raw);
+//      getLocalTables(raw);
     }
-    notifyListeners();
   }
 
 
-  getRemoteTables(){
+  getRemoteTables(token){
     // 联网请求用户课表数据
-    TableRequest.getUserTables(profile.token)
+    TableRequest.getUserTables(token)
         .then((res){
-          _tables = res['tables'];
+          saveTableInfo(res['tables']);
           currentTable = StuTable.fromMap(_tables[0]);
-          notifyListeners();
         })
         .catchError((res){
-          // 暂时省略
+          print(res);
         });
   }
 
@@ -124,12 +123,11 @@ class TableProvider extends ProfileProvider{
   }
 
 
-  createOneClass(StuClass stuclass) async {
-    var res = await TableRequest.createOneClass(stuclass, profile.token, activeTableId)
+  createOneClass(StuClass stuClass) async {
+    var res = await TableRequest.createOneClass(stuClass, profile.token, activeTableId)
         .then((res){
           return true;
         }).catchError((res){
-          print(res);
           return false;
         });
     return res;
@@ -144,5 +142,17 @@ class TableProvider extends ProfileProvider{
           return res['information'];
         });
     return res;
+  }
+
+  // 课表信息持久化存储
+  saveTableInfo(List tables){
+    List <String> temp = [];
+    _tables = tables;
+    for(int i = 0; i < tables.length; i++){
+      var p = StuTable.fromMap(tables[i]);
+      temp.add(jsonEncode(p.toJson()));
+    }
+    StorageManager.sharedPreferences.setStringList("tables", temp);
+    notifyListeners();
   }
 }

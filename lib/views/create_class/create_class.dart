@@ -231,7 +231,7 @@ class _CreateClassState extends State<CreateClass> with TickerProviderStateMixin
               if(res){
                 gobackToHome("添加课表成功O(∩_∩)O");
                 // 通知其更新首页课表
-                tableProvider.getRemoteTables();
+                tableProvider.getRemoteTables(profileProvider.profile.token);
               }else{
                 _scaffoldkey.currentState.showSnackBar(Snack.error("未知错误"));
               }

@@ -74,7 +74,6 @@ class _LoginFormState extends State<LoginForm>  with TickerProviderStateMixin{
       Future r = profileProvider.gotoRegister(loginForm);
       r.then((res){
         if(res.isSuccess){
-          tableProvider.getRemoteTables();
           gobackToHome("注册成功啦~");
         }else{
           Scaffold.of(context).showSnackBar(Snack.error("抱歉 注册失败"));
@@ -95,7 +94,7 @@ class _LoginFormState extends State<LoginForm>  with TickerProviderStateMixin{
       Future r = profileProvider.gotoLogin(loginForm);
       r.then((res){
         if(res.isSuccess){
-          tableProvider.getRemoteTables();
+          tableProvider.getRemoteTables(profileProvider.profile.token);
           gobackToHome(res.information);
         }else{
           Scaffold.of(context).showSnackBar(Snack.error(res.information));
