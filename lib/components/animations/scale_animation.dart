@@ -69,7 +69,7 @@ class _ScaleAnimationState extends State<ScaleAnimation> with TickerProviderStat
   @override
   void dispose() {
     // TODO: implement dispose
-    super.dispose();
     disPoseAnimation();
+    super.dispose();
   }
 }

@@ -72,6 +72,6 @@ class Profile {
   @override
   String toString() {
     // TODO: implement toString
-    return "$userName $token";
+    return "$userName $token $termStartTime";
   }
 }

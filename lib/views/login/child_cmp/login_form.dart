@@ -117,7 +117,7 @@ class _LoginFormState extends State<LoginForm>  with TickerProviderStateMixin{
               color: Colors.blue,
               child: Container(
                 padding: EdgeInsets.fromLTRB(40, 90, 40, 0),
-                child: Column(
+                child: ListView(
                   children: <Widget>[
                     TextField(
                         autocorrect: true,

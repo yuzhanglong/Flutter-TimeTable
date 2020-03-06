@@ -69,13 +69,19 @@ class ProfileProvider extends ChangeNotifier{
 
 
   // 修改个人信息
-  resetProfileInfo(Profile profile){
-    ProfileRequst.resetProfileInfo(profile, _profile.token)
+  resetProfileInfo(Profile profile) async {
+    var p = await ProfileRequst.resetProfileInfo(profile, _profile.token)
         .then((res){
           var p = Profile.fromJsonMap(res);
+          print(p.termStartTime);
           p.token = _profile.token;
           saveProfileInfo(p);
+          return true;
+        })
+        .catchError((res){
+          return false;
         });
+    return p;
   }
 
 

@@ -72,9 +72,16 @@ class _ClassSettingsState extends State<ClassSettings> {
                          if(val != null){
                            var p = Profile();
                            p.termStartTime = val;
-                           profileProvider.resetProfileInfo(p);
-                           _scaffoldkey.currentState.showSnackBar(Snack.success("开学日期修改成功"));
-                           tableProvider.initTables();
+                           Future f = profileProvider.resetProfileInfo(p);
+                           f.then((res){
+                             if(res){
+                               _scaffoldkey.currentState.showSnackBar(Snack.success("开学日期修改成功"));
+                               tableProvider.renewTime(p.termStartTime);
+                               tableProvider.initTables();
+                             }else{
+                               _scaffoldkey.currentState.showSnackBar(Snack.success("开学日期修改失败"));
+                             }
+                           });
                          }
                        });
                      },

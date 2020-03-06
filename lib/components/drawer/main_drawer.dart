@@ -113,7 +113,7 @@ class _MainDrawerState extends State<MainDrawer> {
                     ListTile(
                       onTap: (){
                         if(profileProvider.isLogin){
-                          Navigator.push(context, MaterialPageRoute(builder: (context) =>LoginPage()))
+                          Navigator.push(context, MaterialPageRoute(builder: (context) =>SettingPage()))
                               .then((res){
                                 Scaffold.of(context).openEndDrawer();
                                 if(res != null){

@@ -48,7 +48,15 @@ class TableProvider extends ProfileProvider{
 
   initTimes(){
     DateTime termStartTime = profile != null ? profile.termStartTime : DateTime.now();
+    beginDate = nowDate.subtract(Duration(days: nowDate.weekday - 1));
     weekNumber = TableDate.getWeeksGap(termStartTime, nowDate).toInt();
+    notifyListeners();
+  }
+
+  renewTime(DateTime termStartTime){
+    beginDate = nowDate.subtract(Duration(days: nowDate.weekday - 1));
+    weekNumber = TableDate.getWeeksGap(termStartTime, nowDate).toInt();
+    notifyListeners();
   }
 
   initTables(){
@@ -58,6 +66,7 @@ class TableProvider extends ProfileProvider{
     }else if(raw != null){
       getLocalTables(raw);
     }
+    notifyListeners();
   }
 
 
