@@ -3,6 +3,15 @@
 ### About
 
 ##### 一个还不错的课程表app 基于flutter编写
+##### 对应后端项目地址 https://github.com/yuzhanglong/zucc_helper_backend
+
+
+
+### Acknowledgement
+
+##### 部分界面样式参照了网上的ui设计图
+
+##### 首页课程表的布局参照了华为应用商店的一款课程表app
 
 
 
@@ -12,109 +21,115 @@
 ├─assets
 │  └─images   //静态资源
 ├─lib
-│  │  app.dart
-│  │  main.dart  //程序入口
+│  │  main.dart    // 程序入口
 │  │
-│  ├─components
-│  │  ├─animations
-│  │  │      scale_animation.dart  //封装的动画
+│  ├─components   // 组件
+│  │  ├─animations    // 动画相关
+│  │  │      scale_animation.dart
 │  │  │
 │  │  ├─drawer
-│  │  │  │  main_drawer.dart //home页抽屉
+│  │  │  │  main_drawer.dart
 │  │  │  │
 │  │  │  └─child_cmp
-│  │  │          better_drawer.dart  //抽屉widget
+│  │  │          better_drawer.dart
 │  │  │
-│  │  ├─expansion
-│  │  │      better_expansion.dart  //扩展列表
+│  │  ├─topbar
+│  │  │      top_bar.dart
+│  │  │      top_bar_item.dart
 │  │  │
-│  │  └─topbar
-│  │          top_bar.dart   //首页的顶部栏
-│  │          top_bar_item.dart
+│  │  └─mini_widgets
+│  │          text_field_for_show.dart
+│  │          better_expansion.dart
 │  │
-│  ├─config  //配置相关
-│  │      global.dart   //全局配置(这里和provider的逻辑有点混乱，需要重构)
+│  ├─config     // 配置
 │  │      global_config.dart
-│  │      network_config.dart  //网络请求配置
-│  │      school_data.dart  //学校时间信息
+│  │      network_config.dart
+│  │      school_data.dart
+│  │      provider_manager.dart
+│  │      router_manager.dart
+│  │      storage_manager.dart
 │  │
-│  ├─models  //模型相关
-│  │      response_model.dart //后端响应模型
-│  │      school_model.dart  //学校模型
-│  │      table_model.dart  //课程表模型
-│  │      user_model.dart  //用户模型
+│  ├─models   // 模型
+│  │      school_model.dart
+│  │      login_model.dart
+│  │      profile_model.dart
+│  │      response_model.dart
+│  │      table_model.dart
 │  │
-│  ├─network
-│  │      requests.dart  //封装dio
-│  │      table_request.dart  //课程表相关请求
-│  │      user_request.dart  //用户相关请求
-│  │      utils_request.dart //导入课表相关
+│  ├─network   // 网络请求相关
+│  │      profile_request.dart
+│  │      requests.dart
+│  │      table_request.dart
+│  │      utils_request.dart
 │  │
-│  ├─router
-│  │      custom_router.dart  //router跳转相关(没用上,后来觉得还是默认的好)
+│  ├─router   // 路由相关
+│  │      custom_router.dart
+│  │      router_manager.dart
 │  │
-│  ├─store //状态管理
-│  │      base.dart
-│  │      profile_provider.dart  //个人信息 权限等的状态管理
-│  │      table_provider.dart  //课程表的状态管理
+│  ├─store   // 状态管理
+│  │      profile_provider.dart
+│  │      table_provider.dart
 │  │
-│  ├─utils  //工具类
-│  │      data_helper.dart  //数据持久化处理
-│  │      pick_data.dart    //选择器的选项文件
-│  │      snack_bar.dart	//在默认snack_bar基础上封装的snack_bar
-│  │      table_date.dart	//计算相关
-│  │      table_maker.dart  //课程表初始化
+│  ├─utils  // 工具
+│  │      data_helper.dart
+│  │      pick_data.dart
+│  │      snack_bar.dart
+│  │      table_date.dart
+│  │      table_maker.dart
 │  │
-│  └─views
-│      ├─connection   //拉取教务处课表视图
+│  └─views  // 视图
+│      ├─connection
 │      │  │  connection.dart
 │      │  │
 │      │  └─child_cmp
-│      │          check_code.dart  //二维码显示widget
-│      │          data_form.dart   //登录教务平台界面
+│      │          check_code.dart
+│      │          data_form.dart
 │      │
 │      ├─create_class
-│      │      create_class.dart   //新建课程界面
+│      │      create_class.dart
 │      │
 │      ├─home
-│      │  │  home.dart  //首页(显示课程表)
+│      │  │  home.dart
 │      │  │
 │      │  └─child_cmp
 │      │      ├─classes_map
-│      │      │      class_card_item.dart  //课程表组件
-│      │      │      class_time_item.dart  //课程表组件(左侧时间线)
-│      │      │      main_classes_map.dart //课程表主体
+│      │      │      class_card_item.dart
+│      │      │      class_time_item.dart
+│      │      │      main_classes_map.dart
+│      │      │      bottom_show.dart
 │      │      │
 │      │      └─day_bar
-│      │              day_bar.dart    //顶端显示周次
-│      │              day_bar_item.dart   //顶端显示周次组件的items
+│      │              day_bar.dart
+│      │              day_bar_item.dart
 │      │
 │      ├─login
-│      │  │  login.dart   //登录视图
+│      │  │  login.dart
 │      │  │
 │      │  └─child_cmp
-│      │          login_form.dart   //登录表单
-│      │          split_line.dart   //分割线widget
+│      │          split_line.dart
+│      │          login_form.dart
 │      │
-│      └─settings       //设置视图
-│          │  settings.dart   //设置
-│          │
-│          └─child_cmp
-│                  about.dart    //关于弹框
-│                  accout_settings.dart   //账户设置
-│                  class_settings.dart  //课程设置
-│                  personalized_settings.dart   //个性化设置(暂未开发)
-│                  set_password.dart  //重置密码组件
+│      ├─settings
+│      │  │  settings.dart
+│      │  │
+│      │  └─child_cmp
+│      │          about.dart
+│      │          accout_settings.dart
+│      │          personalized_settings.dart
+│      │          set_password.dart
+│      │          class_settings.dart
+│      │
+│      └─common
+│              not_found.dart
 │
-├─preview     //项目预览图片(见下面)
+├─preview   // 预览
 │      1.jpg
 │      2.jpg
 │      3.jpg
 │      4.jpg
 │      5.jpg
+│
 ```
-
-
 
 
 
@@ -129,13 +144,5 @@
 ![](https://github.com/yuzhanglong/zucc_helper/blob/master/preview/4.jpg)
 
 ![](https://github.com/yuzhanglong/zucc_helper/blob/master/preview/5.jpg)
-
-
-
-### Acknowledgement
-
-##### 部分界面样式参照了网上的ui设计图
-
-##### 首页课程表的布局参照了华为应用商店的一款课程表app
 
 2020年3月1日23:14:21

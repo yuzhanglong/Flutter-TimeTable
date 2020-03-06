@@ -35,7 +35,7 @@ class _BottomShowState extends State<BottomShow> {
           ),
           SizedBox(height: 18),
           TextFieldForShow(
-            hintText: widget.stuClass.place != "" ? widget.stuClass.place: '当前课程地点未设置',
+            hintText: widget.stuClass.place != null ? widget.stuClass.place: '当前课程地点未设置',
             icon: Icon(Icons.place, color: Color.fromARGB(255, 233, 141, 212)),
           ),
 
@@ -61,7 +61,7 @@ class _BottomShowState extends State<BottomShow> {
           ),
           TextFieldForShow(
             icon: Icon(Icons.person_outline, color: Color.fromARGB(255, 233, 141, 212),),
-            hintText: widget.stuClass.teacher != "" ? widget.stuClass.teacher: '当前课程教师未设置',
+            hintText: widget.stuClass.teacher != null ? widget.stuClass.teacher: '当前课程教师未设置',
           ),
         ],
       ),
