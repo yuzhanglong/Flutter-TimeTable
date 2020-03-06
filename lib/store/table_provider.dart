@@ -61,11 +61,11 @@ class TableProvider extends ProfileProvider{
 
   initTables(){
     // 本地课表
-    var raw;
+    var raw = StorageManager.sharedPreferences.getStringList("tables");
     if(raw == null && profile != null){
       getRemoteTables(profile.token);
     }else if(raw != null){
-//      getLocalTables(raw);
+      getLocalTables(raw);
     }
   }
 
@@ -74,11 +74,7 @@ class TableProvider extends ProfileProvider{
     // 联网请求用户课表数据
     TableRequest.getUserTables(token)
         .then((res){
-          print(res);
-          _tables = res['tables'];
-          currentTable = StuTable.fromMap(_tables[0]);
-          notifyListeners();
-//          saveTableInfo(res['tables']);
+          saveTableInfo(res['tables']);
         })
         .catchError((res){
           print(res);
@@ -88,8 +84,9 @@ class TableProvider extends ProfileProvider{
 
   void getLocalTables(List raw){
     for(int i = 0; i < raw.length; i++){
-      _tables.add(StuTable.fromMap(jsonDecode(raw[i])));
+      _tables.add(jsonDecode(raw[i]));
     }
+    currentTable = StuTable.fromMap(_tables[0]);
     notifyListeners();
   }
 
@@ -150,12 +147,15 @@ class TableProvider extends ProfileProvider{
   // 课表信息持久化存储
   saveTableInfo(List tables){
     List <String> temp = [];
+
     _tables = tables;
     currentTable = StuTable.fromMap(_tables[0]);
+
     for(int i = 0; i < tables.length; i++){
       var p = StuTable.fromMap(tables[i]);
       temp.add(jsonEncode(p.toJson()));
     }
+
     StorageManager.sharedPreferences.setStringList("tables", temp);
     notifyListeners();
   }

@@ -58,7 +58,6 @@ class ProfileProvider extends ChangeNotifier{
     ProfileRequst.getProfileInfo(_profile.token)
         .then((res){
           var p = Profile.fromJsonMap(res);
-
           saveProfileInfo(p);
         }).catchError((error){
 
