@@ -135,8 +135,8 @@ class TableProvider extends ProfileProvider{
     return res;
   }
 
-  getEduSystemData(userName, password, code) async {
-    var res = await UtilsRequest.getDataFromEducationSystem(userName, password, code, profile.token)
+  getEduSystemData(userName, password, code, token) async {
+    var res = await UtilsRequest.getDataFromEducationSystem(userName, password, code, token)
         .then((res){
           return "s";
         })

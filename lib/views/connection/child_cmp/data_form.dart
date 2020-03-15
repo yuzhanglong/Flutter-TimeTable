@@ -1,10 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:zucc_helper/config/network_config.dart';
-import 'package:zucc_helper/models/response_model.dart';
-import 'package:zucc_helper/models/table_model.dart';
-import 'package:zucc_helper/network/requests.dart';
-import 'package:zucc_helper/network/profile_request.dart';
-import 'package:zucc_helper/network/utils_request.dart';
 import 'package:zucc_helper/store/profile_provider.dart';
 import 'package:zucc_helper/store/table_provider.dart';
 import 'package:zucc_helper/utils/snack_bar.dart';
@@ -35,6 +30,8 @@ class _DataFormState extends State<DataForm> {
   Widget build(BuildContext context) {
 
     TableProvider tableProvider = Provider.of<TableProvider>(context);
+    ProfileProvider profileProvider = Provider.of<ProfileProvider>(context);
+
 
     gobackToHome(info){
       Navigator.of(context).pop(info);
@@ -42,7 +39,7 @@ class _DataFormState extends State<DataForm> {
 
 
     sendDataForm(){
-      Future f = tableProvider.getEduSystemData(userName, password, checkCode);
+      Future f = tableProvider.getEduSystemData(userName, password, checkCode, profileProvider.profile.token);
       f.then((res){
         if(res == "s"){
           gobackToHome("课表获取成功~");
@@ -161,7 +158,7 @@ class _DataFormState extends State<DataForm> {
                           },
                           child: Text("刷新验证码", style: TextStyle(
                             color: Colors.white,
-                          ),)
+                          ))
                       ),
                     )
                   ],
