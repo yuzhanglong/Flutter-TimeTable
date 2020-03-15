@@ -3,6 +3,7 @@
 *
 * */
 import 'package:flutter/material.dart';
+import 'package:zucc_helper/config/storage_manager.dart';
 
 class StuTable {
   // 课程表名称
@@ -42,6 +43,12 @@ class StuTable {
     return data;
   }
 
+
+
+  void clearTables(){
+    // 持久化数据删除
+    StorageManager.sharedPreferences.remove("tables");
+  }
 }
 
 

@@ -83,6 +83,7 @@ class ProfileProvider extends ChangeNotifier{
 
   // 保存用户信息
   saveProfileInfo(Profile profile){
+    print(profile.token);
     _profile = profile;
     _profile.setProfile();
     // 通知其他组件更新

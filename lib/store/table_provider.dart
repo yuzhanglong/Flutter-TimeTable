@@ -118,13 +118,15 @@ class TableProvider extends ProfileProvider{
   clearTables(){
     _tables = [];
     weekNumber = 1;
+    // 持久化数据删除
+    currentTable.clearTables();
     currentTable = null;
     notifyListeners();
   }
 
 
-  createOneClass(StuClass stuClass) async {
-    var res = await TableRequest.createOneClass(stuClass, profile.token, activeTableId)
+  createOneClass(StuClass stuClass, token) async {
+    var res = await TableRequest.createOneClass(stuClass, token, activeTableId)
         .then((res){
           return true;
         }).catchError((res){

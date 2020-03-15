@@ -226,7 +226,7 @@ class _CreateClassState extends State<CreateClass> with TickerProviderStateMixin
         onPressed: (){
           var p = singleClass.validate();
           if(p == "pass"){
-            Future r = tableProvider.createOneClass(singleClass);
+            Future r = tableProvider.createOneClass(singleClass, profileProvider.profile.token);
             r.then((res){
               if(res){
                 gobackToHome("添加课表成功O(∩_∩)O");
