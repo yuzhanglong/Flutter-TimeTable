@@ -79,7 +79,7 @@ class _ClassSettingsState extends State<ClassSettings> {
                                tableProvider.renewTime(p.termStartTime);
                                tableProvider.initTables();
                              }else{
-                               _scaffoldkey.currentState.showSnackBar(Snack.success("开学日期修改失败"));
+                               _scaffoldkey.currentState.showSnackBar(Snack.error("开学日期修改失败"));
                              }
                            });
                          }

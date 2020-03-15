@@ -58,10 +58,12 @@ class ProfileRequst {
         method: "post",
         data: {
           "userName":  profile.userName,
-          //  "password": profile.password
-          "termStartYear": t['termStartYear'],
-          "termStartMonth": t['termStartMonth'],
-          "termStartDay": t['termStartDay']
+          //  "password": profile.password,
+          "termStartTime":{
+            "termStartYear": t['termStartYear'],
+            "termStartMonth": t['termStartMonth'],
+            "termStartDay": t['termStartDay']
+          }
         },
         headers: {
           "Authorization": 'Basic ' + base64Encode(utf8.encode('$token:'))
