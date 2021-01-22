@@ -3,7 +3,6 @@
 ### About
 
 ##### 一个还不错的课程表app 基于flutter编写
-##### 对应后端项目地址 https://github.com/yuzhanglong/zucc_helper_backend
 
 
 
